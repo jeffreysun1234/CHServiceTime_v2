@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.mycompany.chservicetime.utilities.TimeslotEntityExtKt" />
+
+        <variable
+            name="itemClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="activiteCheckBoxClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="timeslot"
+            type="com.mycompany.chservicetime.data.source.local.TimeslotEntity" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:onClick="@{itemClickListener}"
+        card_view:cardCornerRadius="8dp"
+        card_view:cardElevation="8dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/activate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:checked="@{timeslot.activated}"
+                android:onClick="@{activiteCheckBoxClickListener}"
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                app:layout_constraintBottom_toTopOf="@+id/days"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/title"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:ems="14"
+                android:text="@{timeslot.title}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="@{TimeslotEntityExtKt.getDays(timeslot)}"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/the_timeslot" />
+
+            <TextView
+                android:id="@+id/the_timeslot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@{TimeslotEntityExtKt.getTimeRange(timeslot)}"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/days"
+                app:layout_constraintStart_toStartOf="@+id/title"
+                app:layout_constraintTop_toBottomOf="@+id/title" />
+
+            <ImageView
+                android:id="@+id/repeat_flag"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:visibility="@{timeslot.repeated ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/days"
+                app:layout_constraintEnd_toEndOf="@+id/title"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toTopOf="@+id/days"
+                app:srcCompat="@drawable/ic_repeat_foreground" />
+            <!-- app:activatedTimeslot="@{timeslot.activated}"/>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

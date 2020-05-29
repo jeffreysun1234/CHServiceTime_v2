@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CHServiceTime</string>
+    <string name="add_timeslot">Add timeslot</string>
+    <string name="empty_timeslot_list">Your timeslots is empty!</string>
+    <string name="next_alarm_time_label">Next alarm at : %1$s</string>
+    <string name="save_button">Save</string>
+    <string name="delete_button">Delete</string>
+    <string name="menu_add_timeslot">New timeslot</string>
+</resources>

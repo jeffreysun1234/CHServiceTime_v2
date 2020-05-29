@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/timeslotListFragment">
+
+    <fragment
+        android:id="@+id/timeslotListFragment"
+        android:name="com.mycompany.chservicetime.timeslotlist.TimeslotListFragment"
+        android:label="TimeslotListFragment">
+        <action
+            android:id="@+id/action_timeslotListFragment_to_timeslotDetailFragment"
+            app:destination="@id/timeslotDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeslotDetailFragment"
+        android:name="com.mycompany.chservicetime.timeslotdetail.TimeslotDetailFragment"
+        android:label="TimeslotDetailFragment">
+        <argument
+            android:name="timeslotId"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_timeslotDetailFragment_to_timeslotListFragment"
+            app:destination="@id/timeslotListFragment"
+            app:popUpTo="@id/timeslotListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

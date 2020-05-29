@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewmodel"
+            type="com.mycompany.chservicetime.timeslotlist.TimeslotListViewModel" />
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/timeslot_list_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{viewmodel.timeslotList.empty ? View.GONE : View.VISIBLE}">
+
+            <TextView
+                android:id="@+id/next_alarm_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/list_item_padding"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginRight="@dimen/list_item_padding"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:gravity="center_vertical"
+                android:text="@{@string/next_alarm_time_label(viewmodel.nextAlarmTime)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+            <!--            app:items="@{viewmodel.items}"-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/timeslot_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/empty_timeslot_list_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="@{viewmodel.timeslotList.empty ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:id="@+id/empty_timeslot_list_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_timeslot_list"
+                android:textAppearance="?attr/textAppearanceHeadline5" />
+
+            <Button
+                android:id="@+id/add_timeslot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_timeslot" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+</layout>
