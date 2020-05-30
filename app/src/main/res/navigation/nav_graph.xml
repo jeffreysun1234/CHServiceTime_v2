@@ -14,8 +14,7 @@
     </fragment>
     <fragment
         android:id="@+id/timeslotDetailFragment"
-        android:name="com.mycompany.chservicetime.timeslotdetail.TimeslotDetailFragment"
-        android:label="TimeslotDetailFragment">
+        android:name="com.mycompany.chservicetime.timeslotdetail.TimeslotDetailFragment">
         <argument
             android:name="timeslotId"
             app:argType="string"

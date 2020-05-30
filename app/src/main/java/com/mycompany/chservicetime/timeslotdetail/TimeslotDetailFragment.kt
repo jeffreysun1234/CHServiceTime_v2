@@ -43,8 +43,14 @@ class TimeslotDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setCustomTitle()
         handleViewEvent()
         viewModel.start()
+    }
+
+    private fun setCustomTitle() {
+        val resTitle = if (args.timeslotId == null) R.string.title_new else R.string.title_update
+        requireActivity().title = resources.getText(resTitle)
     }
 
     // private fun setupSnackbar() {

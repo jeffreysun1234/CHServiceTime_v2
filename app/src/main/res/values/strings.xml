@@ -6,4 +6,6 @@
     <string name="save_button">Save</string>
     <string name="delete_button">Delete</string>
     <string name="menu_add_timeslot">New timeslot</string>
+    <string name="title_new">New</string>
+    <string name="title_update">Update</string>
 </resources>
