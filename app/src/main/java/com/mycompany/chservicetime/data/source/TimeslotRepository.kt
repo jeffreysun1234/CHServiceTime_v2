@@ -12,4 +12,7 @@ class TimeslotRepository(private val timeslotDao: TimeslotDao) {
     suspend fun deleteTimeslotById(timeslotId: String) = timeslotDao.deleteTimeslotById(timeslotId)
 
     suspend fun saveTimeslot(timeslot: TimeslotEntity) = timeslotDao.insertTimeslot(timeslot)
+
+    suspend fun activateTimeslot(timeslotId: String, activatedFlag: Boolean) =
+        timeslotDao.updateActivated(timeslotId, activatedFlag)
 }

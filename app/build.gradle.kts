@@ -64,6 +64,7 @@ dependencies {
     // implementation("androidx.work:work-gcm:${BuildDependenciesVersions.WORK_VERSION}")
     implementation("androidx.work:work-runtime-ktx:${Versions.WORK_VERSION}")
     implementation("com.google.android.material:material:${Versions.MATERIAL_VERSION}")
+    implementation("com.jakewharton.timber:timber:${Versions.TIMBER_VERSION}")
     implementation("org.koin:koin-android:${Versions.KOIN_VERSION}")
     implementation("org.koin:koin-androidx-scope:${Versions.KOIN_VERSION}")
     implementation("org.koin:koin-androidx-viewmodel:${Versions.KOIN_VERSION}")

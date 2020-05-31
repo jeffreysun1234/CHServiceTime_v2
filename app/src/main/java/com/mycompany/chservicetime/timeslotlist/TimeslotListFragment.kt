@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.mycompany.chservicetime.R
+import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.databinding.FragmentTimeslotListBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,7 +27,11 @@ class TimeslotListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentTimeslotListBinding.inflate(inflater, container, false)
-        val adapter = TimeslotListAdapter()
+        val adapter = TimeslotListAdapter(object : TimeslotListAdapter.ActiviteTimeslotListener {
+            override fun doTask(timeslot: TimeslotEntity) {
+                viewModel.doActivateTimeslot(timeslot)
+            }
+        })
         binding.timeslotList.adapter = adapter
 
         binding.addTimeslot.setOnClickListener {

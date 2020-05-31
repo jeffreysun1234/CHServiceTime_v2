@@ -51,10 +51,10 @@ interface TimeslotDao {
      * Update the active status of a timeslot
      *
      * @param timeslotId    id of the timeslot
-     * @param activated status to be updated
+     * @param activatFlag status to be updated
      */
-    @Query("UPDATE timeslots SET activated = :activated WHERE entry_id = :timeslotId")
-    suspend fun updateActivated(timeslotId: String, activated: Boolean)
+    @Query("UPDATE timeslots SET activated = :activatFlag WHERE entry_id = :timeslotId")
+    suspend fun updateActivated(timeslotId: String, activatFlag: Boolean)
 
     /**
      * Delete a timeslot by id.

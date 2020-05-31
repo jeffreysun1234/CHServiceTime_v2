@@ -10,10 +10,11 @@ object Versions {
     const val KOTLIN_VERSION = "1.3.72"
     const val LIFECYCLE_VERSION = "2.2.0"
     const val MATERIAL_VERSION = "1.1.0"
+    const val NAVIGATION_VERSION = "2.2.0"
     const val RECYCLERVIEW_VERSION = "1.1.0-alpha05"
+    const val TIMBER_VERSION = "4.7.1"
     const val ROOM_VERSION = "2.2.5"
     const val WORK_VERSION = "2.3.4"
-    const val NAVIGATION_VERSION = "2.2.0"
 
     // appCompatVersion = '1.1.0'
     // constraintLayoutVersion = '2.0.0-beta3'

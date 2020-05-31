@@ -12,10 +12,14 @@ import com.mycompany.chservicetime.R
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.databinding.ItemTimeslotListBinding
 
-class TimeslotListAdapter :
+class TimeslotListAdapter(val activiteTimeslotListener: ActiviteTimeslotListener) :
     ListAdapter<TimeslotEntity, TimeslotListAdapter.ViewHolder>(
         TimeslotDiffCallback()
     ) {
+
+    interface ActiviteTimeslotListener {
+        fun doTask(timeslot: TimeslotEntity)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -27,21 +31,20 @@ class TimeslotListAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val vItem: TimeslotEntity = getItem(position)
+        holder.bind(vItem)
+        holder.binding.setActiviteCheckBoxClickListener {
+            activiteTimeslotListener.doTask(vItem)
+        }
     }
 
     class ViewHolder(
-        private val binding: ItemTimeslotListBinding
+        val binding: ItemTimeslotListBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.setItemClickListener { view ->
                 binding.timeslot?.let { timeslot ->
                     navigateToTimeslotDetail(timeslot.id, view)
-                }
-            }
-            binding.setActiviteCheckBoxClickListener { view ->
-                binding.timeslot?.let { timeslot ->
-                    //TODO
                 }
             }
         }
