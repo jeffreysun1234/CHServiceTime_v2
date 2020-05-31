@@ -4,6 +4,7 @@
     package="com.mycompany.chservicetime">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <dist:module dist:instant="true" />
 
@@ -16,7 +17,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".services.AlarmJobIntentService"
+            android:name=".services.AlarmService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"></service>
+
+        <receiver
+            android:name=".receivers.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <service
+            android:name=".services.BootService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 

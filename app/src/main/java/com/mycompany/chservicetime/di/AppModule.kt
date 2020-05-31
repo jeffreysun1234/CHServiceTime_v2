@@ -21,17 +21,8 @@ val localDataSourceModule = module {
 
 val appModule = module {
 
-    viewModel {
-        TimeslotListViewModel(
-            get()
-        )
-    }
-    viewModel { (timeslotId: String) ->
-        TimeslotDetailViewModel(
-            timeslotId,
-            get()
-        )
-    }
+    viewModel { TimeslotListViewModel(get(), get()) }
+    viewModel { (timeslotId: String) -> TimeslotDetailViewModel(timeslotId, get()) }
 
 }
 

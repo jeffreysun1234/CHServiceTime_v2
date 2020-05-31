@@ -14,7 +14,7 @@ private const val ACTION_FOO = "com.mycompany.chservicetime.services.action.FOO"
 private const val EXTRA_PARAM1 = "com.mycompany.chservicetime.services.extra.PARAM1"
 private const val EXTRA_PARAM2 = "com.mycompany.chservicetime.services.extra.PARAM2"
 
-class AlarmJobIntentService : JobIntentService() {
+class BootService : JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
         Log.i("AlarmJobIntentService", "Executing work: $intent")
@@ -60,14 +60,14 @@ class AlarmJobIntentService : JobIntentService() {
         private const val JOB_ID = 1000
 
         fun enqueueWork(context: Context, work: Intent) {
-            enqueueWork(context, AlarmJobIntentService::class.java, JOB_ID, work)
+            enqueueWork(context, BootService::class.java, JOB_ID, work)
         }
 
         /**
          * Starts this service to perform action Foo with the given parameters.
          */
         fun startActionFoo(context: Context, param1: String, param2: String) {
-            val intent = Intent(context, AlarmJobIntentService::class.java).apply {
+            val intent = Intent(context, BootService::class.java).apply {
                 action = ACTION_FOO
                 putExtra(EXTRA_PARAM1, param1)
                 putExtra(EXTRA_PARAM2, param2)

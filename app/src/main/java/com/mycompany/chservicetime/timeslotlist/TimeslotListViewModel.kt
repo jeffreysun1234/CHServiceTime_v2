@@ -1,15 +1,19 @@
 package com.mycompany.chservicetime.timeslotlist
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mycompany.chservicetime.data.source.TimeslotRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
+import com.mycompany.chservicetime.services.AlarmService
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class TimeslotListViewModel internal constructor(
+    private val app: Application,
     private val timeslotRepository: TimeslotRepository
-) : ViewModel() {
+) : AndroidViewModel(app) {
 
     val timeslotList: LiveData<List<TimeslotEntity>> = timeslotRepository.getTimeslotList()
 
@@ -22,5 +26,12 @@ class TimeslotListViewModel internal constructor(
 
             // Refresh list to show the new state
             // loadTimeslotList(false)
+
+            // TODO: get a timestamp
+
+            Timber.d("Set next alarm.")
+
+            AlarmService.setNextAlarm(app.applicationContext)
+
         }
 }
