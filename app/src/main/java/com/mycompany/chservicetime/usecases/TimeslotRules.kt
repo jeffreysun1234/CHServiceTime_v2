@@ -24,7 +24,6 @@ class TimeslotRules {
          *
          * Time is in 24 hour format.
          */
-        @ExperimentalStdlibApi
         fun getRequiredTimeslots(
             timeslots: List<TimeslotEntity>,
             dayOfWeek: Int
@@ -77,7 +76,8 @@ class TimeslotRules {
                 val lastOne = acc.last()
                 if (timeslot.first <= lastOne.second) {
                     if (timeslot.second > lastOne.second) {
-                        acc.removeLast()
+                        // acc.removeLast()
+                        acc.removeAt(acc.lastIndex)
                         acc.add(Pair(lastOne.first, timeslot.second))
                     }
                 } else {

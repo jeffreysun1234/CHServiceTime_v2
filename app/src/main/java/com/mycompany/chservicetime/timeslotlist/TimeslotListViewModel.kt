@@ -7,6 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.chservicetime.data.source.TimeslotRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.services.AlarmService
+import com.mycompany.chservicetime.usecases.TimeslotRules
+import com.mycompany.chservicetime.utilities.getCurrentHHmm
+import com.mycompany.chservicetime.utilities.getTodayOfWeek
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -27,11 +30,13 @@ class TimeslotListViewModel internal constructor(
             // Refresh list to show the new state
             // loadTimeslotList(false)
 
-            // TODO: get a timestamp
-
-            Timber.d("Set next alarm.")
-
-            AlarmService.setNextAlarm(app.applicationContext)
-
         }
+
+    fun triggerAlarmService(timeslots: List<TimeslotEntity>) {
+        val requiredTimeslots = TimeslotRules.getRequiredTimeslots(timeslots, getTodayOfWeek())
+        val nextAlarmTimePoint =
+            TimeslotRules.getNextAlarmTimePoint(requiredTimeslots, getCurrentHHmm())
+        Timber.d("Set next alarm: $nextAlarmTimePoint")
+        AlarmService.setNextAlarm(app.applicationContext)
+    }
 }
