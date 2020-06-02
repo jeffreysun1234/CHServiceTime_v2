@@ -70,7 +70,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ToggleButton
-            android:id="@+id/day5_button"
+            android:id="@+id/day_fri_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="@={viewmodel.day5Selected}"
@@ -82,13 +82,13 @@
             android:textAllCaps="false"
             android:textOff="Fr"
             android:textOn="Fr"
-            app:layout_constraintBottom_toBottomOf="@+id/day6_button"
-            app:layout_constraintEnd_toStartOf="@+id/day6_button"
+            app:layout_constraintBottom_toBottomOf="@+id/day_sat_button"
+            app:layout_constraintEnd_toStartOf="@+id/day_sat_button"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day4_button" />
+            app:layout_constraintStart_toEndOf="@+id/day_thu_button" />
 
         <ToggleButton
-            android:id="@+id/day0_button"
+            android:id="@+id/day_sun_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -101,13 +101,13 @@
             android:textAllCaps="false"
             android:textOff="Su"
             android:textOn="Su"
-            app:layout_constraintBottom_toBottomOf="@+id/day1_button"
-            app:layout_constraintEnd_toStartOf="@+id/day1_button"
+            app:layout_constraintBottom_toBottomOf="@+id/day_mon_button"
+            app:layout_constraintEnd_toStartOf="@+id/day_mon_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ToggleButton
-            android:id="@+id/day1_button"
+            android:id="@+id/day_mon_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="@={viewmodel.day1Selected}"
@@ -119,13 +119,13 @@
             android:textAllCaps="false"
             android:textOff="Mo"
             android:textOn="Mo"
-            app:layout_constraintBottom_toBottomOf="@+id/day2_button"
-            app:layout_constraintEnd_toStartOf="@+id/day2_button"
+            app:layout_constraintBottom_toBottomOf="@+id/day_tue_button"
+            app:layout_constraintEnd_toStartOf="@+id/day_tue_button"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day0_button" />
+            app:layout_constraintStart_toEndOf="@+id/day_sun_button" />
 
         <ToggleButton
-            android:id="@+id/day2_button"
+            android:id="@+id/day_tue_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="@={viewmodel.day2Selected}"
@@ -137,13 +137,13 @@
             android:textAllCaps="false"
             android:textOff="Tu"
             android:textOn="Tu"
-            app:layout_constraintBottom_toBottomOf="@+id/day3_button"
-            app:layout_constraintEnd_toStartOf="@+id/day3_button"
+            app:layout_constraintBottom_toBottomOf="@+id/day_wed_button"
+            app:layout_constraintEnd_toStartOf="@+id/day_wed_button"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day1_button" />
+            app:layout_constraintStart_toEndOf="@+id/day_mon_button" />
 
         <ToggleButton
-            android:id="@+id/day3_button"
+            android:id="@+id/day_wed_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="@={viewmodel.day3Selected}"
@@ -155,13 +155,13 @@
             android:textAllCaps="false"
             android:textOff="We"
             android:textOn="We"
-            app:layout_constraintBottom_toBottomOf="@+id/day4_button"
-            app:layout_constraintEnd_toStartOf="@+id/day4_button"
+            app:layout_constraintBottom_toBottomOf="@+id/day_thu_button"
+            app:layout_constraintEnd_toStartOf="@+id/day_thu_button"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day2_button" />
+            app:layout_constraintStart_toEndOf="@+id/day_tue_button" />
 
         <ToggleButton
-            android:id="@+id/day4_button"
+            android:id="@+id/day_thu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="@={viewmodel.day4Selected}"
@@ -173,13 +173,13 @@
             android:textAllCaps="false"
             android:textOff="Th"
             android:textOn="Th"
-            app:layout_constraintBottom_toBottomOf="@+id/day5_button"
-            app:layout_constraintEnd_toStartOf="@+id/day5_button"
+            app:layout_constraintBottom_toBottomOf="@+id/day_fri_button"
+            app:layout_constraintEnd_toStartOf="@+id/day_fri_button"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day3_button" />
+            app:layout_constraintStart_toEndOf="@+id/day_wed_button" />
 
         <ToggleButton
-            android:id="@+id/day6_button"
+            android:id="@+id/day_sat_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -195,7 +195,7 @@
             android:textOn="Sa"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day5_button"
+            app:layout_constraintStart_toEndOf="@+id/day_fri_button"
             app:layout_constraintTop_toBottomOf="@+id/timeslot_end_time" />
 
         <CheckBox
@@ -206,8 +206,8 @@
             android:checked="@={viewmodel.repeated}"
             android:text="Repeat Weekly"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/day6_button"
-            app:layout_constraintTop_toBottomOf="@+id/day6_button" />
+            app:layout_constraintEnd_toEndOf="@+id/day_sat_button"
+            app:layout_constraintTop_toBottomOf="@+id/day_sat_button" />
 
         <TimePicker
             android:id="@+id/timeslot_begin_time"
