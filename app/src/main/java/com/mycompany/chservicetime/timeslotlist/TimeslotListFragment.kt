@@ -26,16 +26,21 @@ class TimeslotListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTimeslotListBinding.inflate(inflater, container, false)
         val adapter = TimeslotListAdapter(object : TimeslotListAdapter.ActiviteTimeslotListener {
             override fun doTask(timeslot: TimeslotEntity) {
                 viewModel.doActivateTimeslot(timeslot)
             }
         })
-        binding.timeslotList.adapter = adapter
 
-        binding.addTimeslot.setOnClickListener {
-            navigateToTimeslotDetail()
+        binding = FragmentTimeslotListBinding.inflate(inflater, container, false).apply {
+            viewmodel = viewModel
+            lifecycleOwner = viewLifecycleOwner
+
+            timeslotList.adapter = adapter
+
+            addTimeslot.setOnClickListener {
+                navigateToTimeslotDetail()
+            }
         }
 
         subscribeUi(adapter, binding)

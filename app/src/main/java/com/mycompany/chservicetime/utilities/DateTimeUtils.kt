@@ -18,3 +18,5 @@ fun getFormatHourMinuteInt(hour: Int, minute: Int) = hour * 100 + minute
 
 fun getFormatHourMinuteString(hour: Int, minute: Int) =
     "${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}"
+
+fun getFormatHourMinuteString(hhmm: Int) = getFormatHourMinuteString(hhmm / 100, hhmm % 100)

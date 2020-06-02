@@ -37,7 +37,6 @@
                 android:text="@{@string/next_alarm_time_label(viewmodel.nextAlarmTime)}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-            <!--            app:items="@{viewmodel.items}"-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/timeslot_list"
                 android:layout_width="match_parent"
