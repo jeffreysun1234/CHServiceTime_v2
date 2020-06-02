@@ -174,7 +174,7 @@ class TimeslotRulesTest {
         assertEquals("[]", Arrays.deepToString(resultData.toTypedArray()))
 
         // Two input data with only one selected and activated
-        inputData = mutableListOf(work_1_activated, work_2_activated.copy(isDay2Selected = false))
+        inputData = mutableListOf(work_1_activated, work_2_activated.copy(isTueSelected = false))
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
         assertEquals("[(900, 1200)]", Arrays.deepToString(resultData.toTypedArray()))
 

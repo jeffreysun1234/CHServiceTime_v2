@@ -85,13 +85,13 @@ class TimeslotDetailViewModel internal constructor(
             beginTimeMunite.value = timeslot.beginTimeMinute
             endTimeHour.value = timeslot.endTimeHour
             endTimeMunite.value = timeslot.endTimeMinute
-            day0Selected.value = timeslot.isDay0Selected
-            day1Selected.value = timeslot.isDay1Selected
-            day2Selected.value = timeslot.isDay2Selected
-            day3Selected.value = timeslot.isDay3Selected
-            day4Selected.value = timeslot.isDay4Selected
-            day5Selected.value = timeslot.isDay5Selected
-            day6Selected.value = timeslot.isDay6Selected
+            day0Selected.value = timeslot.isSunSelected
+            day1Selected.value = timeslot.isMonSelected
+            day2Selected.value = timeslot.isTueSelected
+            day3Selected.value = timeslot.isWedSelected
+            day4Selected.value = timeslot.isThuSelected
+            day5Selected.value = timeslot.isFriSelected
+            day6Selected.value = timeslot.isSatSelected
             repeated.value = timeslot.isRepeated
         }
     }
@@ -116,13 +116,13 @@ class TimeslotDetailViewModel internal constructor(
         beginTimeMunite.value?.let { timeslot.beginTimeMinute = it }
         endTimeHour.value?.let { timeslot.endTimeHour = it }
         endTimeMunite.value?.let { timeslot.endTimeMinute = it }
-        day0Selected.value?.let { timeslot.isDay0Selected = it }
-        day1Selected.value?.let { timeslot.isDay1Selected = it }
-        day2Selected.value?.let { timeslot.isDay2Selected = it }
-        day3Selected.value?.let { timeslot.isDay3Selected = it }
-        day4Selected.value?.let { timeslot.isDay4Selected = it }
-        day5Selected.value?.let { timeslot.isDay5Selected = it }
-        day6Selected.value?.let { timeslot.isDay6Selected = it }
+        day0Selected.value?.let { timeslot.isSunSelected = it }
+        day1Selected.value?.let { timeslot.isMonSelected = it }
+        day2Selected.value?.let { timeslot.isTueSelected = it }
+        day3Selected.value?.let { timeslot.isWedSelected = it }
+        day4Selected.value?.let { timeslot.isThuSelected = it }
+        day5Selected.value?.let { timeslot.isFriSelected = it }
+        day6Selected.value?.let { timeslot.isSatSelected = it }
         repeated.value?.let { timeslot.isRepeated = it }
         return timeslot
     }

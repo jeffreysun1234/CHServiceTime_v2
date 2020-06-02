@@ -41,26 +41,26 @@ class TimeslotRules {
                     it.copy(
                         beginTimeHour = BEGIN_HOUR_DAY,
                         beginTimeMinute = BEGIN_MINUTE_DAY,
-                        isDay1Selected = it.isDay0Selected,
-                        isDay2Selected = it.isDay1Selected,
-                        isDay3Selected = it.isDay2Selected,
-                        isDay4Selected = it.isDay3Selected,
-                        isDay5Selected = it.isDay4Selected,
-                        isDay6Selected = it.isDay5Selected,
-                        isDay0Selected = it.isDay6Selected
+                        isMonSelected = it.isSunSelected,
+                        isTueSelected = it.isMonSelected,
+                        isWedSelected = it.isTueSelected,
+                        isThuSelected = it.isWedSelected,
+                        isFriSelected = it.isThuSelected,
+                        isSatSelected = it.isFriSelected,
+                        isSunSelected = it.isSatSelected
                     )
                 )
             }
         }.filter {
             // select all timeslots in the special day
             when (dayOfWeek) {
-                Calendar.SUNDAY -> it.isDay0Selected
-                Calendar.MONDAY -> it.isDay1Selected
-                Calendar.TUESDAY -> it.isDay2Selected
-                Calendar.WEDNESDAY -> it.isDay3Selected
-                Calendar.THURSDAY -> it.isDay4Selected
-                Calendar.FRIDAY -> it.isDay5Selected
-                Calendar.SATURDAY -> it.isDay6Selected
+                Calendar.SUNDAY -> it.isSunSelected
+                Calendar.MONDAY -> it.isMonSelected
+                Calendar.TUESDAY -> it.isTueSelected
+                Calendar.WEDNESDAY -> it.isWedSelected
+                Calendar.THURSDAY -> it.isThuSelected
+                Calendar.FRIDAY -> it.isFriSelected
+                Calendar.SATURDAY -> it.isSatSelected
                 else -> false
             }
         }.sortedWith(

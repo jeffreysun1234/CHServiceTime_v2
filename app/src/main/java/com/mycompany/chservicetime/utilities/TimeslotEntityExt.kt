@@ -4,13 +4,13 @@ import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 
 fun TimeslotEntity.getDays(): String {
     var daysTemp = ""
-    if (isDay0Selected) daysTemp += "Sun "
-    if (isDay1Selected) daysTemp += "Mon "
-    if (isDay2Selected) daysTemp += "Tur "
-    if (isDay3Selected) daysTemp += "Wed "
-    if (isDay4Selected) daysTemp += "Thr "
-    if (isDay5Selected) daysTemp += "Fri "
-    if (isDay6Selected) daysTemp += "Sat "
+    if (isSunSelected) daysTemp += "Sun "
+    if (isMonSelected) daysTemp += "Mon "
+    if (isTueSelected) daysTemp += "Tur "
+    if (isWedSelected) daysTemp += "Wed "
+    if (isThuSelected) daysTemp += "Thr "
+    if (isFriSelected) daysTemp += "Fri "
+    if (isSatSelected) daysTemp += "Sat "
 
     return daysTemp
 }
