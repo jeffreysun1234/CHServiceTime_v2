@@ -2,7 +2,7 @@ package com.mycompany.chservicetime.services
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
+import android.app.PendingIntent.FLAG_CANCEL_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
@@ -13,6 +13,8 @@ import timber.log.Timber
 private const val ACTION_SET_SOUND_MODEL = "com.mycompany.chservicetime.services.action.ALARM"
 
 private const val EXTRA_PARAM1 = "com.mycompany.chservicetime.services.extra.PARAM1"
+
+private const val REQUEST_CODE = 0
 
 class AlarmService : JobIntentService() {
 
@@ -30,14 +32,25 @@ class AlarmService : JobIntentService() {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
             val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-                PendingIntent.getBroadcast(context, 0, intent, FLAG_UPDATE_CURRENT)
+                PendingIntent.getBroadcast(context, REQUEST_CODE, intent, FLAG_CANCEL_CURRENT)
             }
 
-            alarmManager?.setAndAllowWhileIdle(
+            alarmManager?.setExactAndAllowWhileIdle(
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + 15 * 1000,
+                SystemClock.elapsedRealtime() + 10 * 1000,
                 alarmIntent
             )
+        }
+
+        fun cancelAlarm(context: Context) {
+            val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
+                PendingIntent.getBroadcast(context, REQUEST_CODE, intent, 0)
+            }
+            val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
+
+            if (alarmIntent != null && alarmManager != null) {
+                alarmManager.cancel(alarmIntent)
+            }
         }
 
         /**

@@ -3,6 +3,7 @@ package com.mycompany.chservicetime.data.source.local
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.Calendar
 import java.util.UUID
 
 @Entity(tableName = "timeslots")
@@ -37,7 +38,9 @@ data class TimeslotEntity(
     @ColumnInfo(name = "repeated")
     var isRepeated: Boolean = false,
     @ColumnInfo(name = "activated")
-    var isActivated: Boolean = false
+    var isActivated: Boolean = false,
+    @ColumnInfo(name = "update_timestamp")
+    var updateTimestamp: Long = Calendar.getInstance().timeInMillis
 ) {
 
     // TODO : Delete the code if it is not used.

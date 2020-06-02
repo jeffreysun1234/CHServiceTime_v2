@@ -16,6 +16,7 @@ object Versions {
     const val ROOM_VERSION = "2.2.5"
     const val WORK_VERSION = "2.3.4"
 
+    const val TRUTH_VERSION = "0.42"
     // appCompatVersion = '1.1.0'
     // constraintLayoutVersion = '2.0.0-beta3'
     // coreTestingVersion = '2.0.0'
@@ -25,7 +26,6 @@ object Versions {
     // glideVersion = '4.10.0'
     // gradleVersion = '3.6.3'
     // gsonVersion = '2.8.2'
-    // junitVersion = '4.12'
     // ktlintVersion = '0.33.0'
     // ktxVersion = '1.0.2'
     // runnerVersion = '1.0.1'

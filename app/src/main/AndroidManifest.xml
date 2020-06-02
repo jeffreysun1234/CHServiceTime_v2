@@ -18,14 +18,8 @@
         android:theme="@style/AppTheme">
         <service
             android:name=".services.AlarmService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"></service>
-
-        <receiver
-            android:name=".receivers.AlarmReceiver"
-            android:enabled="true"
-            android:exported="true" />
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
             android:name=".services.BootService"
@@ -33,8 +27,12 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
+            android:name=".receivers.AlarmReceiver"
+            android:exported="false" />
+
+
+        <receiver
             android:name=".receivers.BootReceiver"
-            android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
