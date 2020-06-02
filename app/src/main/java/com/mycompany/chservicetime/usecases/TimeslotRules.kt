@@ -1,9 +1,13 @@
 package com.mycompany.chservicetime.usecases
 
-import END_TIME_DAY
+import BEGIN_HOUR_DAY
+import BEGIN_MINUTE_DAY
+import END_HOUR_DAY
+import END_MINUTE_DAY
+import END_TIME_DAY_INT
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
-import com.mycompany.chservicetime.utilities.beginTimeString
-import com.mycompany.chservicetime.utilities.endTimeString
+import com.mycompany.chservicetime.utilities.beginTimeInt
+import com.mycompany.chservicetime.utilities.endTimeInt
 import java.util.Calendar
 
 class TimeslotRules {
@@ -24,19 +28,19 @@ class TimeslotRules {
         fun getRequiredTimeslots(
             timeslots: List<TimeslotEntity>,
             dayOfWeek: Int
-        ): List<Pair<String, String>> = timeslots.filter {
+        ): List<Pair<Int, Int>> = timeslots.filter {
             // select all activated timeslots
             it.isActivated
         }.flatMap {
             // Get overnight TimeSlots
-            if (it.beginTimeString() <= it.endTimeString()) {
+            if (it.beginTimeInt() <= it.endTimeInt()) {
                 listOf(it.copy())
             } else {
                 listOf(
-                    it.copy(endTimeHour = 23, endTimeMinute = 59),
+                    it.copy(endTimeHour = END_HOUR_DAY, endTimeMinute = END_MINUTE_DAY),
                     it.copy(
-                        beginTimeHour = 0,
-                        beginTimeMinute = 0,
+                        beginTimeHour = BEGIN_HOUR_DAY,
+                        beginTimeMinute = BEGIN_MINUTE_DAY,
                         isDay1Selected = it.isDay0Selected,
                         isDay2Selected = it.isDay1Selected,
                         isDay3Selected = it.isDay2Selected,
@@ -61,9 +65,9 @@ class TimeslotRules {
             }
         }.sortedWith(
             // Sort by begin time and end time
-            compareBy({ it.beginTimeString() }, { it.endTimeString() })
+            compareBy({ it.beginTimeInt() }, { it.endTimeInt() })
         ).map {
-            Pair(it.beginTimeString(), it.endTimeString())
+            Pair(it.beginTimeInt(), it.endTimeInt())
         }.fold(mutableListOf()) {
             // union two crossed timeslots
                 acc, timeslot ->
@@ -92,10 +96,10 @@ class TimeslotRules {
          *          The second describes the next alarm time.
          */
         fun getNextAlarmTimePoint(
-            currentTimeslotList: List<Pair<String, String>>,
-            currentTimeString: String
-        ): Pair<Boolean, String> {
-            if (currentTimeslotList.isEmpty()) return Pair(false, END_TIME_DAY)
+            currentTimeslotList: List<Pair<Int, Int>>,
+            currentTimeString: Int
+        ): Pair<Boolean, Int> {
+            if (currentTimeslotList.isEmpty()) return Pair(false, END_TIME_DAY_INT)
 
             for (timeslot in currentTimeslotList) {
                 if (currentTimeString < timeslot.first) return Pair(false, timeslot.first)
@@ -104,7 +108,7 @@ class TimeslotRules {
                 }
             }
 
-            return Pair(false, END_TIME_DAY)
+            return Pair(false, END_TIME_DAY_INT)
         }
     }
 }

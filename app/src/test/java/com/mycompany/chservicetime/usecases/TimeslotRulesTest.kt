@@ -86,7 +86,7 @@ class TimeslotRulesTest {
     @Throws(Exception::class)
     fun testGetRequiredTimeSlots() {
         var inputData = mutableListOf<TimeslotEntity>()
-        var resultData = listOf<Pair<String, String>>()
+        var resultData = listOf<Pair<Int, Int>>()
 
         // Empty input data
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
@@ -97,7 +97,7 @@ class TimeslotRulesTest {
         // Only one input data with selected and activated
         inputData = mutableListOf(work_activated)
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
-        assertEquals("[(09:30, 17:00)]", Arrays.deepToString(resultData.toTypedArray()))
+        assertEquals("[(930, 1700)]", Arrays.deepToString(resultData.toTypedArray()))
 
         // Only one input data with selected and unactivated
         inputData = mutableListOf(work_activated.copy(isActivated = false))
@@ -121,12 +121,12 @@ class TimeslotRulesTest {
         // the period day is selected
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
         assertEquals(
-            "[(00:00, 07:30), (22:30, 23:59)]",
+            "[(0, 730), (2230, 2359)]",
             Arrays.deepToString(resultData.toTypedArray())
         )
         // the period day is unselected
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.SUNDAY)
-        assertEquals("[(22:30, 23:59)]", Arrays.deepToString(resultData.toTypedArray()))
+        assertEquals("[(2230, 2359)]", Arrays.deepToString(resultData.toTypedArray()))
 
         // Only one overnight input data with selected and unactivated
         inputData = mutableListOf(sleep_activated.copy(isActivated = false))
@@ -141,7 +141,7 @@ class TimeslotRulesTest {
         inputData = mutableListOf(sleep_activated)
         // the period day is selected
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.FRIDAY)
-        assertEquals("[(00:00, 07:30)]", Arrays.deepToString(resultData.toTypedArray()))
+        assertEquals("[(0, 730)]", Arrays.deepToString(resultData.toTypedArray()))
         // the period day is unselected
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.SATURDAY)
         assertEquals("[]", Arrays.deepToString(resultData.toTypedArray()))
@@ -161,7 +161,7 @@ class TimeslotRulesTest {
         inputData = mutableListOf(work_1_activated, work_2_activated)
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
         assertEquals(
-            "[(09:00, 12:00), (13:00, 17:00)]",
+            "[(900, 1200), (1300, 1700)]",
             Arrays.deepToString(resultData.toTypedArray())
         )
 
@@ -176,7 +176,7 @@ class TimeslotRulesTest {
         // Two input data with only one selected and activated
         inputData = mutableListOf(work_1_activated, work_2_activated.copy(isDay2Selected = false))
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
-        assertEquals("[(09:00, 12:00)]", Arrays.deepToString(resultData.toTypedArray()))
+        assertEquals("[(900, 1200)]", Arrays.deepToString(resultData.toTypedArray()))
 
         // Two input data with unselected and activated
         inputData = mutableListOf(work_1_activated, work_2_activated)
@@ -186,19 +186,19 @@ class TimeslotRulesTest {
         // Two overnight input data with selected and activated
         inputData = mutableListOf(data_5_overnight_activated, data_6_overnight_activated)
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.SATURDAY)
-        assertEquals("[(00:00, 05:00)]", Arrays.deepToString(resultData.toTypedArray()))
+        assertEquals("[(0, 500)]", Arrays.deepToString(resultData.toTypedArray()))
 
         /******* Cross Input Data ******/
         // Two cross input data with selected and activated
         inputData = mutableListOf(data_1_activated, data_2_activated)
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
-        assertEquals("[(10:30, 18:00)]", Arrays.deepToString(resultData.toTypedArray()))
+        assertEquals("[(1030, 1800)]", Arrays.deepToString(resultData.toTypedArray()))
 
         // Cross input data with selected and activated, two segment
         inputData = mutableListOf(data_1_activated, data_2_activated, data_3_activated)
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
         assertEquals(
-            "[(10:30, 18:00), (18:30, 20:30)]",
+            "[(1030, 1800), (1830, 2030)]",
             Arrays.deepToString(resultData.toTypedArray())
         )
 
@@ -206,7 +206,7 @@ class TimeslotRulesTest {
         inputData = mutableListOf(data_1_activated, data_2_activated, data_4_activated)
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
         assertEquals(
-            "[(10:30, 20:00)]",
+            "[(1030, 2000)]",
             Arrays.deepToString(resultData.toTypedArray())
         )
 
@@ -214,7 +214,7 @@ class TimeslotRulesTest {
         inputData = mutableListOf(data_1_activated, data_7_overnight_activated)
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
         assertEquals(
-            "[(00:00, 05:00), (10:30, 14:30), (17:30, 23:59)]",
+            "[(0, 500), (1030, 1430), (1730, 2359)]",
             Arrays.deepToString(resultData.toTypedArray())
         )
 
@@ -222,7 +222,7 @@ class TimeslotRulesTest {
         inputData = mutableListOf(data_1_activated, data_2_activated, data_7_overnight_activated)
         resultData = TimeslotRules.getRequiredTimeslots(inputData, Calendar.TUESDAY)
         assertEquals(
-            "[(00:00, 05:00), (10:30, 23:59)]",
+            "[(0, 500), (1030, 2359)]",
             Arrays.deepToString(resultData.toTypedArray())
         )
     }
@@ -230,26 +230,26 @@ class TimeslotRulesTest {
     @Test
     @Throws(Exception::class)
     fun testGetNextAlarmTimePoint() {
-        val timeslots1 = listOf<Pair<String, String>>()
+        val timeslots1 = listOf<Pair<Int, Int>>()
         val timeslots2 =
-            listOf(Pair("00:00", "07:30"), Pair("10:00", "13:20"), Pair("21:00", "22:00"))
-        val timeslots3 = listOf(Pair("10:00", "13:20"), Pair("21:00", "22:00"))
+            listOf(Pair(0, 730), Pair(1000, 1320), Pair(2100, 2200))
+        val timeslots3 = listOf(Pair(1000, 1320), Pair(2100, 2200))
 
-        var result = TimeslotRules.getNextAlarmTimePoint(timeslots2, "08:30")
-        assertEquals("(false, 10:00)", result.toString())
+        var result = TimeslotRules.getNextAlarmTimePoint(timeslots2, 830)
+        assertEquals("(false, 1000)", result.toString())
 
-        result = TimeslotRules.getNextAlarmTimePoint(timeslots2, "06:30")
-        assertEquals("(true, 07:30)", result.toString())
+        result = TimeslotRules.getNextAlarmTimePoint(timeslots2, 630)
+        assertEquals("(true, 730)", result.toString())
 
-        result = TimeslotRules.getNextAlarmTimePoint(timeslots2, "22:30")
-        assertEquals("(false, 23:59)", result.toString())
+        result = TimeslotRules.getNextAlarmTimePoint(timeslots2, 2230)
+        assertEquals("(false, 2359)", result.toString())
 
         // empty list
-        result = TimeslotRules.getNextAlarmTimePoint(timeslots1, "22:30")
-        assertEquals("(false, 23:59)", result.toString())
+        result = TimeslotRules.getNextAlarmTimePoint(timeslots1, 2230)
+        assertEquals("(false, 2359)", result.toString())
 
         // test the first timepoint
-        result = TimeslotRules.getNextAlarmTimePoint(timeslots3, "09:30")
-        assertEquals("(false, 10:00)", result.toString())
+        result = TimeslotRules.getNextAlarmTimePoint(timeslots3, 930)
+        assertEquals("(false, 1000)", result.toString())
     }
 }

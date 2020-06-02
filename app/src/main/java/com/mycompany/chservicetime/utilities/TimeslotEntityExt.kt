@@ -16,11 +16,16 @@ fun TimeslotEntity.getDays(): String {
 }
 
 fun TimeslotEntity.getTimeRange(): String {
-    return "${beginTimeString()} - ${endTimeString()}"
+    return getFormatHourMinuteString(beginTimeHour, beginTimeMinute) +
+        " - " + getFormatHourMinuteString(endTimeHour, endTimeMinute)
 }
 
-fun TimeslotEntity.beginTimeString() =
-    "${beginTimeHour.toString().padStart(2, '0')}:${beginTimeMinute.toString().padStart(2, '0')}"
+// fun TimeslotEntity.beginTimeString() =
+//     "${beginTimeHour.toString().padStart(2, '0')}:${beginTimeMinute.toString().padStart(2, '0')}"
+//
+// fun TimeslotEntity.endTimeString() =
+//     "${endTimeHour.toString().padStart(2, '0')}:${endTimeMinute.toString().padStart(2, '0')}"
 
-fun TimeslotEntity.endTimeString() =
-    "${endTimeHour.toString().padStart(2, '0')}:${endTimeMinute.toString().padStart(2, '0')}"
+fun TimeslotEntity.beginTimeInt() = getFormatHourMinuteInt(beginTimeHour, beginTimeMinute)
+
+fun TimeslotEntity.endTimeInt() = getFormatHourMinuteInt(endTimeHour, endTimeMinute)
