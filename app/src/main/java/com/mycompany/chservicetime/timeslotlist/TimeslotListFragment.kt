@@ -10,9 +10,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.mycompany.chservicetime.R
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.databinding.FragmentTimeslotListBinding
+import com.mycompany.chservicetime.utilities.EventObserver
+import com.mycompany.chservicetime.utilities.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TimeslotListFragment : Fragment() {
@@ -50,6 +53,12 @@ class TimeslotListFragment : Fragment() {
         return binding.root
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        handleViewEvent()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             R.id.action_add_timeslot -> {
@@ -74,5 +83,16 @@ class TimeslotListFragment : Fragment() {
         val direction = TimeslotListFragmentDirections
             .actionTimeslotListFragmentToTimeslotDetailFragment(null)
         findNavController().navigate(direction)
+    }
+
+    private fun handleViewEvent() {
+        viewModel.currentViewEvent.observe(viewLifecycleOwner, EventObserver {
+            when (it) {
+                is TimeslotListResult.NeedDNDPermission -> {
+                    binding.root.showSnackbar(R.string.need_dnd_permission, Snackbar.LENGTH_SHORT)
+                }
+            }
+
+        })
     }
 }

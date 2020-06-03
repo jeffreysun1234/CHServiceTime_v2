@@ -8,4 +8,10 @@
     <string name="menu_add_timeslot">New timeslot</string>
     <string name="title_new">New</string>
     <string name="title_update">Update</string>
+
+    <string name="need_dnd_permission">Please allow Do Not Disturb for the App.</string>
+    <string name="dnd_dialog_message">The App needs permission to access Do Not Disturb</string>
+    <string name="dnd_dialog_title">Do Not Disturb access needed</string>
+    <string name="dnd_dialog_allow">Allow</string>
+    <string name="dnd_dialog_cancel">Refuse</string>
 </resources>

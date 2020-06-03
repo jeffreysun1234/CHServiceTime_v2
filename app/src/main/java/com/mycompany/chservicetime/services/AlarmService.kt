@@ -28,7 +28,7 @@ class AlarmService : JobIntentService() {
     }
 
     companion object {
-        fun setNextAlarm(context: Context) {
+        fun setNextAlarm(context: Context, nextTimePoint: Int) {
             val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
             val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->

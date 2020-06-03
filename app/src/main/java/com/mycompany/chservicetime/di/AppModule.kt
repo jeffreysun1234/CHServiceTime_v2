@@ -15,7 +15,7 @@ val localDataSourceModule = module {
     // Room Database
     single { CHDatabase.buildDatabase(androidApplication()) }
 
-    // Expose WeatherDAO
+    // Expose TimeslotDao
     single { get<CHDatabase>().timeslotDao() }
 }
 

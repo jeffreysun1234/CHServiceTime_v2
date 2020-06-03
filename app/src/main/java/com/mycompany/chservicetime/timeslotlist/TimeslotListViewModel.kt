@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.chservicetime.data.source.TimeslotRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.services.AlarmService
+import com.mycompany.chservicetime.services.DNDController
 import com.mycompany.chservicetime.usecases.TimeslotRules
+import com.mycompany.chservicetime.utilities.CHEvent
 import com.mycompany.chservicetime.utilities.getCurrentHHmm
 import com.mycompany.chservicetime.utilities.getFormatHourMinuteString
 import com.mycompany.chservicetime.utilities.getTodayOfWeek
@@ -25,14 +27,12 @@ class TimeslotListViewModel internal constructor(
     private val _nextAlarmTime = MutableLiveData<String>()
     val nextAlarmTime: LiveData<String> = _nextAlarmTime
 
+    private val _currentViewEvent = MutableLiveData<CHEvent<TimeslotListResult>>()
+    val currentViewEvent: LiveData<CHEvent<TimeslotListResult>> = _currentViewEvent
+
     fun doActivateTimeslot(timeslot: TimeslotEntity) =
         viewModelScope.launch {
             timeslotRepository.saveTimeslot(timeslot.copy(isActivated = !timeslot.isActivated))
-            // showSnackbarMessage(if (activatedFlage) R.string.timeslot_marked_active else R.string.timeslot_marked_no_active)
-
-            // Refresh list to show the new state
-            // loadTimeslotList(false)
-
         }
 
     fun triggerAlarmService(timeslots: List<TimeslotEntity>) {
@@ -45,6 +45,19 @@ class TimeslotListViewModel internal constructor(
         Timber.d("***** ${nextAlarmTime.value}")
         Timber.d("Set next alarm: $nextAlarmTimePoint")
 
-        AlarmService.setNextAlarm(app.applicationContext)
+        mutePhone(nextAlarmTimePoint.first)
+
+        AlarmService.setNextAlarm(app.applicationContext, nextAlarmTimePoint.second)
+    }
+
+    /**
+     * @param switchFlag true means turn on the mute mode, false means turn off the mute mode.
+     */
+    private fun mutePhone(switchFlag: Boolean) {
+        val switchResult = if (switchFlag) DNDController.turnOnDND() else DNDController.turnOffDND()
+
+        if (!switchResult) {
+            _currentViewEvent.value = CHEvent(TimeslotListResult.NeedDNDPermission)
+        }
     }
 }

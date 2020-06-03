@@ -8,6 +8,6 @@ import com.mycompany.chservicetime.services.AlarmService
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        AlarmService.startActionSetSoundModel(context, "Hello")
+        AlarmService.startActionSetSoundModel(context, "Alarm Hello")
     }
 }
