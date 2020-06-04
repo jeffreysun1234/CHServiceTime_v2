@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mycompany.chservicetime.data.source.TimeslotRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
-import com.mycompany.chservicetime.services.AlarmService
+import com.mycompany.chservicetime.services.AlarmController
 import com.mycompany.chservicetime.services.DNDController
 import com.mycompany.chservicetime.usecases.TimeslotRules
 import com.mycompany.chservicetime.utilities.CHEvent
@@ -36,27 +36,18 @@ class TimeslotListViewModel internal constructor(
         }
 
     fun triggerAlarmService(timeslots: List<TimeslotEntity>) {
-        val requiredTimeslots = TimeslotRules.getRequiredTimeslots(timeslots, getTodayOfWeek())
-        val nextAlarmTimePoint =
-            TimeslotRules.getNextAlarmTimePoint(requiredTimeslots, getCurrentHHmm())
+        if (DNDController.checkDndPermission(false)) {
+            val requiredTimeslots = TimeslotRules.getRequiredTimeslots(timeslots, getTodayOfWeek())
+            val nextAlarmTimePoint =
+                TimeslotRules.getNextAlarmTimePoint(requiredTimeslots, getCurrentHHmm())
 
-        _nextAlarmTime.value = getFormatHourMinuteString(nextAlarmTimePoint.second)
+            _nextAlarmTime.value = getFormatHourMinuteString(nextAlarmTimePoint.second)
 
-        Timber.d("***** ${nextAlarmTime.value}")
-        Timber.d("Set next alarm: $nextAlarmTimePoint")
+            Timber.d("Get next alarm : $nextAlarmTimePoint")
 
-        mutePhone(nextAlarmTimePoint.first)
-
-        AlarmService.setNextAlarm(app.applicationContext, nextAlarmTimePoint.second)
-    }
-
-    /**
-     * @param switchFlag true means turn on the mute mode, false means turn off the mute mode.
-     */
-    private fun mutePhone(switchFlag: Boolean) {
-        val switchResult = if (switchFlag) DNDController.turnOnDND() else DNDController.turnOffDND()
-
-        if (!switchResult) {
+            AlarmController.setNextAlarm(app.applicationContext, nextAlarmTimePoint)
+        } else {
+            _nextAlarmTime.value = ""
             _currentViewEvent.value = CHEvent(TimeslotListResult.NeedDNDPermission)
         }
     }

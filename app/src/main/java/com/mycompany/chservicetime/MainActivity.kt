@@ -22,6 +22,6 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
-        DNDController(this).checkDndPermission()
+        DNDController(this).checkDndPermission(true)
     }
 }

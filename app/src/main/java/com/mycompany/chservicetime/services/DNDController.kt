@@ -26,10 +26,10 @@ object DNDController {
     //Checks if app has access to Do not disturb
     //If no access then prompts user to give permission
     //Call every time before you access Do not disturb
-    fun checkDndPermission(): Boolean {
+    fun checkDndPermission(showSettingDialog: Boolean): Boolean {
         if (!notificationManager!!.isNotificationPolicyAccessGranted) {
             //Ask for permission
-            dndPermissionDialog()
+            if (showSettingDialog) dndPermissionDialog()
             return false
         } else {
             return true
