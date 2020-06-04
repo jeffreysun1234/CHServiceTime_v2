@@ -5,6 +5,8 @@ import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 
 class TimeslotRepository(private val timeslotDao: TimeslotDao) {
 
+    fun getTimeslotListLiveData() = timeslotDao.getTimeslotListLiveData()
+
     fun getTimeslotList() = timeslotDao.getTimeslotList()
 
     fun getTimeslotById(timeslotId: String) = timeslotDao.getTimeslotById(timeslotId)

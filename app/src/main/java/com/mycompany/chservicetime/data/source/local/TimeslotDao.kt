@@ -19,7 +19,10 @@ interface TimeslotDao {
      * @return all timeslots.
      */
     @Query("SELECT * FROM timeslots")
-    fun getTimeslotList(): LiveData<List<TimeslotEntity>>
+    fun getTimeslotListLiveData(): LiveData<List<TimeslotEntity>>
+
+    @Query("SELECT * FROM timeslots")
+    fun getTimeslotList(): List<TimeslotEntity>
 
     /**
      * Select a timeslot by id.

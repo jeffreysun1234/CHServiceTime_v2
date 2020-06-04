@@ -8,7 +8,7 @@ import com.mycompany.chservicetime.services.MuteService
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        MuteService.startActionSetSoundModel(
+        MuteService.startActionSetSoundMode(
             context,
             intent.getBooleanExtra(EXTRA_OPERATION_FLAG, false)
         )

@@ -7,25 +7,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mycompany.chservicetime.data.source.TimeslotRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
-import com.mycompany.chservicetime.services.AlarmController
 import com.mycompany.chservicetime.services.DNDController
-import com.mycompany.chservicetime.usecases.TimeslotRules
+import com.mycompany.chservicetime.services.MuteService
 import com.mycompany.chservicetime.utilities.CHEvent
-import com.mycompany.chservicetime.utilities.getCurrentHHmm
-import com.mycompany.chservicetime.utilities.getFormatHourMinuteString
-import com.mycompany.chservicetime.utilities.getTodayOfWeek
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class TimeslotListViewModel internal constructor(
     private val app: Application,
     private val timeslotRepository: TimeslotRepository
 ) : AndroidViewModel(app) {
 
-    val timeslotList: LiveData<List<TimeslotEntity>> = timeslotRepository.getTimeslotList()
+    val timeslotList: LiveData<List<TimeslotEntity>> = timeslotRepository.getTimeslotListLiveData()
 
     private val _nextAlarmTime = MutableLiveData<String>()
     val nextAlarmTime: LiveData<String> = _nextAlarmTime
+    // TODO: get from Perference
+    // _nextAlarmTime.value = getFormatHourMinuteString(nextAlarmTimePoint.second)
 
     private val _currentViewEvent = MutableLiveData<CHEvent<TimeslotListResult>>()
     val currentViewEvent: LiveData<CHEvent<TimeslotListResult>> = _currentViewEvent
@@ -35,19 +32,12 @@ class TimeslotListViewModel internal constructor(
             timeslotRepository.saveTimeslot(timeslot.copy(isActivated = !timeslot.isActivated))
         }
 
-    fun triggerAlarmService(timeslots: List<TimeslotEntity>) {
+    fun triggerMuteService() {
         if (DNDController.checkDndPermission(false)) {
-            val requiredTimeslots = TimeslotRules.getRequiredTimeslots(timeslots, getTodayOfWeek())
-            val nextAlarmTimePoint =
-                TimeslotRules.getNextAlarmTimePoint(requiredTimeslots, getCurrentHHmm())
-
-            _nextAlarmTime.value = getFormatHourMinuteString(nextAlarmTimePoint.second)
-
-            Timber.d("Get next alarm : $nextAlarmTimePoint")
-
-            AlarmController.setNextAlarm(app.applicationContext, nextAlarmTimePoint)
+            MuteService.startActionSetSoundMode(app.applicationContext)
         } else {
-            _nextAlarmTime.value = ""
+            // TODO: set to Perference, value is null
+
             _currentViewEvent.value = CHEvent(TimeslotListResult.NeedDNDPermission)
         }
     }

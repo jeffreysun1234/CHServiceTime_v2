@@ -40,7 +40,7 @@ class CHDatabaseTest {
     @Throws(Exception::class)
     fun test_timeslotDao() = runBlocking {
         timeslotDao.insertTimeslot(InitData.timeslotEntity_1)
-        val initialTimeslots = timeslotDao.getTimeslotList()
+        val initialTimeslots = timeslotDao.getTimeslotListLiveData()
         // assertThat(initialTimeslots.size, equalTo(1))
     }
 }

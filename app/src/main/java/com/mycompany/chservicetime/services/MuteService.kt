@@ -3,7 +3,14 @@ package com.mycompany.chservicetime.services
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
+import com.mycompany.chservicetime.data.source.TimeslotRepository
+import com.mycompany.chservicetime.data.source.local.TimeslotEntity
+import com.mycompany.chservicetime.usecases.TimeslotRules
+import com.mycompany.chservicetime.utilities.getCurrentHHmm
+import com.mycompany.chservicetime.utilities.getTodayOfWeek
 import com.mycompany.chservicetime.utilities.timestampFormat
+import org.koin.android.ext.android.inject
+import org.koin.core.KoinComponent
 import timber.log.Timber
 import java.util.Calendar
 
@@ -11,20 +18,43 @@ private const val ACTION_SET_SOUND_MODEL = "com.mycompany.chservicetime.services
 
 private const val EXTRA_OPERATION_FLAG = "com.mycompany.chservicetime.services.extra.PARAM1"
 
-class MuteService : JobIntentService() {
+class MuteService : JobIntentService(), KoinComponent {
+
+    private val timeslotRepository: TimeslotRepository by inject()
 
     override fun onHandleWork(intent: Intent) {
         when (intent?.action) {
             ACTION_SET_SOUND_MODEL -> {
-                if (intent.getBooleanExtra(EXTRA_OPERATION_FLAG, false)) {
-                    Timber.d("Set Mute mode at ${timestampFormat(Calendar.getInstance().timeInMillis)}")
-                    DNDController.turnOnDND()
-                } else {
-                    Timber.d("Set Normal mode at ${timestampFormat(Calendar.getInstance().timeInMillis)}")
-                    DNDController.turnOffDND()
+                val currentData = timeslotRepository.getTimeslotList()
+                getCurrentAlarmTimePoint(currentData).let {
+                    setMuteMode(it)
+                    triggerAlarmService(it)
                 }
             }
         }
+    }
+
+    private fun getCurrentAlarmTimePoint(timeslots: List<TimeslotEntity>): Pair<Boolean, Int> {
+        val requiredTimeslots = TimeslotRules.getRequiredTimeslots(timeslots, getTodayOfWeek())
+        return TimeslotRules.getNextAlarmTimePoint(requiredTimeslots, getCurrentHHmm())
+    }
+
+    private fun setMuteMode(nextAlarmTimePoint: Pair<Boolean, Int>) {
+        Timber.d("Get next alarm : $nextAlarmTimePoint")
+
+        if (nextAlarmTimePoint.first) {
+            Timber.d("Set Mute mode at ${timestampFormat(Calendar.getInstance().timeInMillis)}")
+            DNDController.turnOnDND()
+        } else {
+            Timber.d("Set Normal mode at ${timestampFormat(Calendar.getInstance().timeInMillis)}")
+            DNDController.turnOffDND()
+        }
+
+        // TODO: set to Perference for nextAlarmPoint
+    }
+
+    private fun triggerAlarmService(nextAlarmTimePoint: Pair<Boolean, Int>) {
+        AlarmController.setNextAlarm(this.applicationContext, nextAlarmTimePoint)
     }
 
     companion object {
@@ -38,10 +68,17 @@ class MuteService : JobIntentService() {
             enqueueWork(context, MuteService::class.java, JOB_ID, work)
         }
 
-        fun startActionSetSoundModel(context: Context, operationFlag: Boolean) {
+        fun startActionSetSoundMode(context: Context, operationFlag: Boolean) {
             val intent = Intent(context, MuteService::class.java).apply {
                 action = ACTION_SET_SOUND_MODEL
                 putExtra(EXTRA_OPERATION_FLAG, operationFlag)
+            }
+            enqueueWork(context, intent)
+        }
+
+        fun startActionSetSoundMode(context: Context) {
+            val intent = Intent(context, MuteService::class.java).apply {
+                action = ACTION_SET_SOUND_MODEL
             }
             enqueueWork(context, intent)
         }

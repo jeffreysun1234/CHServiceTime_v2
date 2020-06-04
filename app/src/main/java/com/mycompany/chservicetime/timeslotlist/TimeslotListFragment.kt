@@ -75,7 +75,7 @@ class TimeslotListFragment : Fragment() {
     private fun subscribeUi(adapter: TimeslotListAdapter, binding: FragmentTimeslotListBinding) {
         viewModel.timeslotList.observe(viewLifecycleOwner, Observer { result ->
             adapter.submitList(result)
-            viewModel.triggerAlarmService(result)
+            viewModel.triggerMuteService()
         })
     }
 
