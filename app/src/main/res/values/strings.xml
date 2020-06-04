@@ -14,4 +14,5 @@
     <string name="dnd_dialog_title">Do Not Disturb access needed</string>
     <string name="dnd_dialog_allow">Allow</string>
     <string name="dnd_dialog_cancel">Refuse</string>
+    <string name="pref_key_next_alarm_timepoint">reference_next_alarm_timepoint</string>
 </resources>

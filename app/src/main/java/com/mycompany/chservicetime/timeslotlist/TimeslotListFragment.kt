@@ -1,6 +1,8 @@
 package com.mycompany.chservicetime.timeslotlist
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -18,11 +20,15 @@ import com.mycompany.chservicetime.utilities.EventObserver
 import com.mycompany.chservicetime.utilities.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class TimeslotListFragment : Fragment() {
+class TimeslotListFragment : Fragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var binding: FragmentTimeslotListBinding
 
     private val viewModel: TimeslotListViewModel by viewModel()
+
+    private val sharedPreferences: SharedPreferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,6 +65,18 @@ class TimeslotListFragment : Fragment() {
         handleViewEvent()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel._nextAlarmTime.value =
+            sharedPreferences.getString(getString(R.string.pref_key_next_alarm_timepoint), "")
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             R.id.action_add_timeslot -> {
@@ -70,6 +88,12 @@ class TimeslotListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_timeslot_list, menu)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == getString(R.string.pref_key_next_alarm_timepoint)) {
+            viewModel._nextAlarmTime.value = sharedPreferences.getString(key, "")
+        }
     }
 
     private fun subscribeUi(adapter: TimeslotListAdapter, binding: FragmentTimeslotListBinding) {

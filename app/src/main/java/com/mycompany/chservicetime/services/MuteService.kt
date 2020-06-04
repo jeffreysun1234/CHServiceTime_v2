@@ -3,11 +3,14 @@ package com.mycompany.chservicetime.services
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
+import com.mycompany.chservicetime.R
 import com.mycompany.chservicetime.data.source.TimeslotRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.usecases.TimeslotRules
 import com.mycompany.chservicetime.utilities.getCurrentHHmm
+import com.mycompany.chservicetime.utilities.getFormatHourMinuteString
 import com.mycompany.chservicetime.utilities.getTodayOfWeek
+import com.mycompany.chservicetime.utilities.putPreferenceIntValue
 import com.mycompany.chservicetime.utilities.timestampFormat
 import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
@@ -50,7 +53,11 @@ class MuteService : JobIntentService(), KoinComponent {
             DNDController.turnOffDND()
         }
 
-        // TODO: set to Perference for nextAlarmPoint
+        putPreferenceIntValue(
+            this.applicationContext,
+            R.string.pref_key_next_alarm_timepoint,
+            getFormatHourMinuteString(nextAlarmTimePoint.second)
+        )
     }
 
     private fun triggerAlarmService(nextAlarmTimePoint: Pair<Boolean, Int>) {
