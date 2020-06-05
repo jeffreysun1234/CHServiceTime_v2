@@ -1,8 +1,9 @@
 package com.mycompany.chservicetime.timeslotlist
 
+import PREFERENCE_FILE_NAME
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -27,7 +28,7 @@ class TimeslotListFragment : Fragment(), SharedPreferences.OnSharedPreferenceCha
     private val viewModel: TimeslotListViewModel by viewModel()
 
     private val sharedPreferences: SharedPreferences by lazy {
-        PreferenceManager.getDefaultSharedPreferences(context)
+        requireContext().getSharedPreferences(PREFERENCE_FILE_NAME, Context.MODE_PRIVATE)
     }
 
     override fun onCreateView(

@@ -16,7 +16,7 @@ class MuteService : JobIntentService(), KoinComponent {
     override fun onHandleWork(intent: Intent) {
         when (intent?.action) {
             ACTION_SET_SOUND_MODEL -> {
-                MuteOperation(this).execute()
+                MuteOperator(this).execute()
             }
         }
     }

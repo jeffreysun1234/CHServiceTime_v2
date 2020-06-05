@@ -18,7 +18,7 @@ import org.koin.core.inject
 import timber.log.Timber
 import java.util.Calendar
 
-class MuteOperation(val context: Context) : KoinComponent {
+class MuteOperator(val context: Context) : KoinComponent {
 
     private val timeslotRepository: TimeslotRepository by inject()
 

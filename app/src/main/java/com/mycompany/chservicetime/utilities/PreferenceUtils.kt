@@ -1,10 +1,10 @@
 package com.mycompany.chservicetime.utilities
 
+import PREFERENCE_FILE_NAME
 import android.content.Context
-import android.preference.PreferenceManager
 
 fun putPreferenceIntValue(context: Context, key: Int, value: String) {
-    val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+    val sharedPref = context.getSharedPreferences(PREFERENCE_FILE_NAME, Context.MODE_PRIVATE)
     with(sharedPref.edit()) {
         putString(context.resources.getString(key), value)
         apply()
@@ -12,6 +12,6 @@ fun putPreferenceIntValue(context: Context, key: Int, value: String) {
 }
 
 fun getPreferenceIntValue(context: Context, key: Int): String? {
-    val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+    val sharedPref = context.getSharedPreferences(PREFERENCE_FILE_NAME, Context.MODE_PRIVATE)
     return sharedPref.getString(context.resources.getString(key), "")
 }

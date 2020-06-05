@@ -6,6 +6,8 @@ import com.mycompany.chservicetime.utilities.getFormatHourMinuteString
  */
 const val DATABASE_NAME = "CHServiceTime.db"
 
+const val PREFERENCE_FILE_NAME = "CHPreference"
+
 const val BEGIN_HOUR_DAY = 0
 const val BEGIN_MINUTE_DAY = 0
 const val END_HOUR_DAY = 23
