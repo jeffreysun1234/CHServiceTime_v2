@@ -15,4 +15,5 @@
     <string name="dnd_dialog_allow">Allow</string>
     <string name="dnd_dialog_cancel">Refuse</string>
     <string name="pref_key_next_alarm_timepoint">reference_next_alarm_timepoint</string>
+    <string name="receiver_action_mute_operation">com.mycompany.chservicetime.MUTE_OPERATION</string>
 </resources>

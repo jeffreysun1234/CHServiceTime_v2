@@ -3,18 +3,14 @@ package com.mycompany.chservicetime.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.mycompany.chservicetime.services.MuteService
+import com.mycompany.chservicetime.services.MuteOperation
+import timber.log.Timber
 
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        MuteService.startActionSetSoundMode(
-            context,
-            intent.getBooleanExtra(EXTRA_OPERATION_FLAG, false)
-        )
-    }
+        Timber.d("Received an alarm.")
 
-    companion object {
-        const val EXTRA_OPERATION_FLAG = "com.mycompany.chservicetime.alarmReceiver.operationFlag"
+        MuteOperation(context).execute()
     }
 }

@@ -3,8 +3,11 @@ package com.mycompany.chservicetime.services
 import END_TIME_DAY_INT
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import com.mycompany.chservicetime.R
 import com.mycompany.chservicetime.receivers.AlarmReceiver
 import com.mycompany.chservicetime.utilities.getCalendarByHHmm
 
@@ -16,7 +19,11 @@ object AlarmController {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
         val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-            intent.putExtra(AlarmReceiver.EXTRA_OPERATION_FLAG, nextTimePoint.first)
+            intent.action = context.resources.getString(R.string.receiver_action_mute_operation)
+            intent.component = ComponentName(
+                context.applicationContext.packageName,
+                "com.mycompany.chservicetime.receivers.AlarmReceiver"
+            )
             PendingIntent.getBroadcast(
                 context, REQUEST_CODE, intent,
                 PendingIntent.FLAG_CANCEL_CURRENT
@@ -27,11 +34,19 @@ object AlarmController {
         // make sure the alarm time at next day
         if (nextTimePoint.second == END_TIME_DAY_INT) nextAlarmTimestamp += 90 * 1000L
 
-        alarmManager?.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            nextAlarmTimestamp,
-            alarmIntent
-        )
+        if (Build.VERSION.SDK_INT >= 23) {
+            alarmManager?.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                nextAlarmTimestamp,
+                alarmIntent
+            )
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            alarmManager?.setExact(
+                AlarmManager.RTC_WAKEUP,
+                nextAlarmTimestamp,
+                alarmIntent
+            )
+        }
     }
 
     fun cancelAlarm(context: Context) {
