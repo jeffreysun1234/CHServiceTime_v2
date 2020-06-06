@@ -70,6 +70,8 @@ dependencies {
     implementation("org.koin:koin-androidx-scope:${Versions.KOIN_VERSION}")
     implementation("org.koin:koin-androidx-viewmodel:${Versions.KOIN_VERSION}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.KOTLIN_VERSION}")
+    debugImplementation("com.facebook.stetho:stetho:1.5.1")
+    debugImplementation("com.facebook.stetho:stetho-okhttp3:1.5.1")
     testImplementation("androidx.room:room-testing:${Versions.ROOM_VERSION}")
     testImplementation("junit:junit:4.13")
     androidTestImplementation("androidx.arch.core:core-testing:${Versions.CORE_TESTING_VERSION}")
