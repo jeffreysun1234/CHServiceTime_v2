@@ -45,36 +45,41 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
+    testOptions {
+        unitTests.apply {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
-    kapt("androidx.room:room-compiler:${Versions.ROOM_VERSION}")
+    debugImplementation("com.facebook.stetho:stetho:1.5.1")
+    debugImplementation("com.facebook.stetho:stetho-okhttp3:1.5.1")
+    kapt("androidx.room:room-compiler:${Versions.room_verison}")
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation("androidx.annotation:annotation:${Versions.annotation_version}")
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.core:core-ktx:1.3.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIFECYCLE_VERSION}")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.LIFECYCLE_VERSION}")
-    implementation("androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATION_VERSION}")
-    implementation("androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATION_VERSION}")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle_version}")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}")
+    implementation("androidx.navigation:navigation-fragment-ktx:${Versions.navigation_version}")
+    implementation("androidx.navigation:navigation-ui-ktx:${Versions.navigation_version}")
     implementation("androidx.preference:preference:1.1.1")
-    implementation("androidx.recyclerview:recyclerview:${Versions.RECYCLERVIEW_VERSION}")
-    implementation("androidx.room:room-runtime:${Versions.ROOM_VERSION}")
-    implementation("androidx.room:room-ktx:${Versions.ROOM_VERSION}")
+    implementation("androidx.recyclerview:recyclerview:${Versions.recyclerview_version}")
+    implementation("androidx.room:room-runtime:${Versions.room_verison}")
+    implementation("androidx.room:room-ktx:${Versions.room_verison}")
     // implementation("androidx.work:work-gcm:${BuildDependenciesVersions.WORK_VERSION}")
-    implementation("androidx.work:work-runtime-ktx:${Versions.WORK_VERSION}")
-    implementation("com.google.android.material:material:${Versions.MATERIAL_VERSION}")
-    implementation("com.jakewharton.timber:timber:${Versions.TIMBER_VERSION}")
-    implementation("org.koin:koin-android:${Versions.KOIN_VERSION}")
-    implementation("org.koin:koin-androidx-scope:${Versions.KOIN_VERSION}")
-    implementation("org.koin:koin-androidx-viewmodel:${Versions.KOIN_VERSION}")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.KOTLIN_VERSION}")
-    debugImplementation("com.facebook.stetho:stetho:1.5.1")
-    debugImplementation("com.facebook.stetho:stetho-okhttp3:1.5.1")
-    testImplementation("androidx.room:room-testing:${Versions.ROOM_VERSION}")
+    implementation("androidx.work:work-runtime-ktx:${Versions.work_version}")
+    implementation("com.google.android.material:material:${Versions.material_version}")
+    implementation("com.jakewharton.timber:timber:${Versions.timber_version}")
+    implementation("org.koin:koin-android:${Versions.koin_version}")
+    implementation("org.koin:koin-androidx-scope:${Versions.koin_version}")
+    implementation("org.koin:koin-androidx-viewmodel:${Versions.koin_version}")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin_version}")
+    testImplementation("androidx.room:room-testing:${Versions.room_verison}")
     testImplementation("junit:junit:4.13")
-    androidTestImplementation("androidx.arch.core:core-testing:${Versions.CORE_TESTING_VERSION}")
+    androidTestImplementation("androidx.arch.core:core-testing:${Versions.core_testing_version}")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.1")
     // androidTestImplementation("androidx.work:work-testing:${BuildDependenciesVersions.WORK_VERSION}")

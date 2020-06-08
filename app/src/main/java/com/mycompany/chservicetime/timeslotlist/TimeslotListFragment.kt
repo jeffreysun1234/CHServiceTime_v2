@@ -36,11 +36,9 @@ class TimeslotListFragment : Fragment(), SharedPreferences.OnSharedPreferenceCha
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val adapter = TimeslotListAdapter(object : TimeslotListAdapter.ActiviteTimeslotListener {
-            override fun doTask(timeslot: TimeslotEntity) {
-                viewModel.doActivateTimeslot(timeslot)
-            }
-        })
+        val adapter = TimeslotListAdapter { timeslot: TimeslotEntity ->
+            viewModel.doActivateTimeslot(timeslot)
+        }
 
         binding = FragmentTimeslotListBinding.inflate(inflater, container, false).apply {
             viewmodel = viewModel

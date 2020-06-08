@@ -12,14 +12,10 @@ import com.mycompany.chservicetime.R
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.databinding.ItemTimeslotListBinding
 
-class TimeslotListAdapter(val activiteTimeslotListener: ActiviteTimeslotListener) :
+class TimeslotListAdapter(private val onActiviteTimeslot: (TimeslotEntity) -> Unit) :
     ListAdapter<TimeslotEntity, TimeslotListAdapter.ViewHolder>(
         TimeslotDiffCallback()
     ) {
-
-    interface ActiviteTimeslotListener {
-        fun doTask(timeslot: TimeslotEntity)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -27,7 +23,7 @@ class TimeslotListAdapter(val activiteTimeslotListener: ActiviteTimeslotListener
                 LayoutInflater.from(parent.context),
                 R.layout.item_timeslot_list, parent, false
             ),
-            activiteTimeslotListener
+            onActiviteTimeslot
         )
     }
 
@@ -38,7 +34,7 @@ class TimeslotListAdapter(val activiteTimeslotListener: ActiviteTimeslotListener
 
     class ViewHolder(
         val binding: ItemTimeslotListBinding,
-        val activiteTimeslotListener: ActiviteTimeslotListener
+        val onActiviteTimeslot: (TimeslotEntity) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.setItemClickListener { view ->
@@ -48,15 +44,9 @@ class TimeslotListAdapter(val activiteTimeslotListener: ActiviteTimeslotListener
             }
             binding.setActiviteCheckBoxClickListener {
                 binding.timeslot?.let { timeslot ->
-                    activiteTimeslotListener.doTask(timeslot)
+                    onActiviteTimeslot(timeslot)
                 }
             }
-        }
-
-        private fun navigateToTimeslotDetail(timeslotId: String, view: View) {
-            val direction = TimeslotListFragmentDirections
-                .actionTimeslotListFragmentToTimeslotDetailFragment(timeslotId)
-            view.findNavController().navigate(direction)
         }
 
         fun bind(item: TimeslotEntity) {
@@ -64,6 +54,12 @@ class TimeslotListAdapter(val activiteTimeslotListener: ActiviteTimeslotListener
                 timeslot = item
                 executePendingBindings()
             }
+        }
+
+        private fun navigateToTimeslotDetail(timeslotId: String, view: View) {
+            val direction = TimeslotListFragmentDirections
+                .actionTimeslotListFragmentToTimeslotDetailFragment(timeslotId)
+            view.findNavController().navigate(direction)
         }
     }
 }
