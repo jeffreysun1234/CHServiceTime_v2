@@ -1,43 +1,47 @@
-object Versions {
-    // Sdk and tools
-    const val compileSdkVersion = 29
-    const val minSdkVersion = 28
-    const val targetSdkVersion = 29
+import org.gradle.api.artifacts.dsl.DependencyHandler
 
-    // App dependencies
-    const val core_testing_version = "2.0.0"
-    const val koin_version = "2.1.5"
-    const val kotlin_version = "1.3.72"
-    const val lifecycle_version = "2.2.0"
-    const val material_version = "1.1.0"
-    const val navigation_version = "2.2.0"
-    const val recyclerview_version = "1.1.0-alpha05"
-    const val timber_version = "4.7.1"
-    const val room_verison = "2.2.5"
-    const val work_version = "2.3.4"
+// object TestDependencies {
+//     const val ROBOELECTRIC = "org.robolectric:robolectric:${Versions.ROBOELECTRIC}"
+//     const val ROOM = "androidx.room:room-testing:${Versions.ROOM}"
+//     const val EXT = "androidx.test.ext:junit:${Versions.EXT}"
+//     const val CORE = "androidx.test:core:${Versions.TEST}"
+//     const val RUNNER = "androidx.test:runner:${Versions.TEST}"
+//     const val RULES = "androidx.test:rules:${Versions.TEST}"
+//     const val COROUTINES_TEST =
+//         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.COROUTINES}"
+//     const val ARCH_CORE = "androidx.arch.core:core-testing:${Versions.ARCH_CORE}"
+//     const val FRAGMENT_TEST = "androidx.fragment:fragment-testing:${Versions.FRAGMENT_TEST}"
+//     const val MOCK_WEB_SERVER = "com.squareup.okhttp3:mockwebserver:${Versions.MOCK_WEB_SERVER}"
+// }
 
-    const val annotation_version = "1.1.0"
-    const val robolectric_version = "4.3.1"
-    const val extTruth_version = "1.3.0-alpha02"
-    const val testCore_version = "1.3.0-beta02"
-    const val extJUnit_version = "1.1.2-beta02"
-    const val runner_version = "1.3.0-beta02"
-    const val espresso_version = "3.3.0-beta02"
-
-    // appCompatVersion = '1.1.0'
-    // constraintLayoutVersion = '2.0.0-beta3'
-    // coreTestingVersion = '2.0.0'
-    // coroutinesVersion = "1.3.0-M2"
-    // espressoVersion = '3.1.1'
-    // fragmentVersion = '1.1.0-alpha09'
-    // glideVersion = '4.10.0'
-    // gradleVersion = '3.6.3'
-    // gsonVersion = '2.8.2'
-    // ktlintVersion = '0.33.0'
-    // ktxVersion = '1.0.2'
-    // runnerVersion = '1.0.1'
-    // truthVersion = '0.42'
-    // testExtJunit = '1.1.0'
-    // uiAutomatorVersion = '2.2.0'
-    // viewPagerVersion = '1.0.0'
+/**
+ * Adds all the tests dependencies to specific configuration.
+ */
+fun DependencyHandler.addTestsDependencies() {
+    // Some test rules, e.g. InstantTaskExecutorRule
+    testImplementation("androidx.arch.core:core-testing:${Versions.arch_core_testing_version}")
+    // Test helpers for migrations
+    testImplementation("androidx.room:room-testing:${Versions.room_version}")
+    testImplementation("com.google.truth:truth:${Versions.truth_version}")
+    testImplementation("io.mockk:mockk:${Versions.mockk_version}")
+    testImplementation("junit:junit:${Versions.junit_version}")
+    testImplementation("org.hamcrest:hamcrest:${Versions.hamcrest_version}")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinx_coroutines_test_version}")
+    testImplementation("org.robolectric:robolectric:${Versions.robolectric_version}")
+    // testImplementation(RULES)
+    // testImplementation(RUNNER)
+    // testImplementation(FRAGMENT_TEST)
+    // testImplementation(EXT)
+    // testImplementation(MOCK_WEB_SERVER)
 }
+
+// fun DependencyHandler.addAndroidTestsDependencies() {
+//     androidTestImplementation(TestAndroidDependencies.PLAY_CORE)
+//     androidTestImplementation(TestAndroidDependencies.LEAKCANARY)
+//     androidTestImplementation(TestAndroidDependencies.MOCKITO)
+//     androidTestImplementation(TestAndroidDependencies.ESPRESSO)
+//     androidTestImplementation(TestAndroidDependencies.RUNNER)
+//     androidTestImplementation(TestAndroidDependencies.RULES)
+//     androidTestImplementation(TestAndroidDependencies.JUNIT)
+//     androidTestImplementation(TestAndroidDependencies.FRAGMENT_TEST)
+// }

@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mycompany.chservicetime.R
-import com.mycompany.chservicetime.data.source.TimeslotRepository
+import com.mycompany.chservicetime.data.source.DataRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.services.DNDController
 import com.mycompany.chservicetime.services.MuteOperator
@@ -17,10 +17,10 @@ import timber.log.Timber
 
 class TimeslotListViewModel internal constructor(
     private val app: Application,
-    private val timeslotRepository: TimeslotRepository
+    private val dataRepository: DataRepository
 ) : AndroidViewModel(app) {
 
-    val timeslotList: LiveData<List<TimeslotEntity>> = timeslotRepository.getTimeslotListLiveData()
+    val timeslotList: LiveData<List<TimeslotEntity>> = dataRepository.getTimeslotListLiveData()
 
     val _nextAlarmTime = MutableLiveData<String>()
     val nextAlarmTime: LiveData<String> = _nextAlarmTime
@@ -30,7 +30,7 @@ class TimeslotListViewModel internal constructor(
 
     fun doActivateTimeslot(timeslot: TimeslotEntity) =
         viewModelScope.launch {
-            timeslotRepository.saveTimeslot(timeslot.copy(isActivated = !timeslot.isActivated))
+            dataRepository.saveTimeslot(timeslot.copy(isActivated = !timeslot.isActivated))
         }
 
     fun triggerMuteService() {

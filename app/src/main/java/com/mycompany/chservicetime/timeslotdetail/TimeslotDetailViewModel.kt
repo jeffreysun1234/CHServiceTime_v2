@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mycompany.chservicetime.data.source.TimeslotRepository
+import com.mycompany.chservicetime.data.source.DataRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.utilities.CHEvent
 import com.mycompany.chservicetime.utilities.getCurrentHourAndMinute
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
  */
 class TimeslotDetailViewModel internal constructor(
     private val timeslotId: String? = null,
-    private val timeslotRepository: TimeslotRepository
+    private val dataRepository: DataRepository
 ) : ViewModel() {
 
     // Two-way databinding, exposing MutableLiveData
@@ -73,7 +73,7 @@ class TimeslotDetailViewModel internal constructor(
 
         isNewTimeslot = false
 
-        currentData = timeslotRepository.getTimeslotById(timeslotId)
+        currentData = dataRepository.getTimeslotById(timeslotId)
         currentData?.observeForever(customObserver)
     }
 
@@ -129,13 +129,13 @@ class TimeslotDetailViewModel internal constructor(
 
     fun deleteTimeslot() {
         viewModelScope.launch {
-            timeslotId?.let { timeslotRepository.deleteTimeslotById(it) }
+            timeslotId?.let { dataRepository.deleteTimeslotById(it) }
             _currentViewEvent.value = CHEvent(TimeslotDetailResult.DeletedSuccess)
         }
     }
 
     private fun createTimeslot(newTimeslot: TimeslotEntity) = viewModelScope.launch {
-        timeslotRepository.saveTimeslot(newTimeslot)
+        dataRepository.saveTimeslot(newTimeslot)
         _currentViewEvent.value = CHEvent(TimeslotDetailResult.CreatedSuccess)
     }
 
@@ -144,7 +144,7 @@ class TimeslotDetailViewModel internal constructor(
             throw RuntimeException("updateTimeslot() was called but timeslot is new.")
         }
         viewModelScope.launch {
-            timeslotRepository.saveTimeslot(timeslot)
+            dataRepository.saveTimeslot(timeslot)
             _currentViewEvent.value = CHEvent(TimeslotDetailResult.UpdatedSuccess)
         }
     }

@@ -1,5 +1,6 @@
 package com.mycompany.chservicetime.di
 
+import com.mycompany.chservicetime.data.source.DataRepository
 import com.mycompany.chservicetime.data.source.TimeslotRepository
 import com.mycompany.chservicetime.data.source.local.CHDatabase
 import com.mycompany.chservicetime.timeslotdetail.TimeslotDetailViewModel
@@ -10,7 +11,7 @@ import org.koin.dsl.module
 
 val localDataSourceModule = module {
 
-    single { TimeslotRepository(get()) }
+    single<DataRepository> { TimeslotRepository(get()) }
 
     // Room Database
     single { CHDatabase.buildDatabase(androidApplication()) }

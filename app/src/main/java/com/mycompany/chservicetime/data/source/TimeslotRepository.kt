@@ -3,18 +3,20 @@ package com.mycompany.chservicetime.data.source
 import com.mycompany.chservicetime.data.source.local.TimeslotDao
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 
-class TimeslotRepository(private val timeslotDao: TimeslotDao) {
+class TimeslotRepository(private val timeslotDao: TimeslotDao) : DataRepository {
 
-    fun getTimeslotListLiveData() = timeslotDao.getTimeslotListLiveData()
+    override fun getTimeslotListLiveData() = timeslotDao.getTimeslotListLiveData()
 
-    fun getTimeslotList() = timeslotDao.getTimeslotList()
+    override fun getTimeslotList() = timeslotDao.getTimeslotList()
 
-    fun getTimeslotById(timeslotId: String) = timeslotDao.getTimeslotById(timeslotId)
+    override fun getTimeslotById(timeslotId: String) = timeslotDao.getTimeslotById(timeslotId)
 
-    suspend fun deleteTimeslotById(timeslotId: String) = timeslotDao.deleteTimeslotById(timeslotId)
+    override suspend fun deleteTimeslotById(timeslotId: String) =
+        timeslotDao.deleteTimeslotById(timeslotId)
 
-    suspend fun saveTimeslot(timeslot: TimeslotEntity) = timeslotDao.insertTimeslot(timeslot)
+    override suspend fun saveTimeslot(timeslot: TimeslotEntity) =
+        timeslotDao.insertTimeslot(timeslot)
 
-    suspend fun activateTimeslot(timeslotId: String, activatedFlag: Boolean) =
+    override suspend fun activateTimeslot(timeslotId: String, activatedFlag: Boolean) =
         timeslotDao.updateActivated(timeslotId, activatedFlag)
 }

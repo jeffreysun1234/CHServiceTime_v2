@@ -2,13 +2,13 @@ package com.mycompany.chservicetime.workers
 
 import InitData
 import android.content.Context
-import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.mycompany.chservicetime.data.source.local.CHDatabase
 import kotlinx.coroutines.coroutineScope
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import timber.log.Timber
 
 class SeedDatabaseWorker(
     context: Context,
@@ -21,7 +21,7 @@ class SeedDatabaseWorker(
             database.timeslotDao().insertTimeslot(InitData.timeslotEntity_2)
             Result.success()
         } catch (ex: Exception) {
-            Log.e(TAG, "Error seeding database", ex)
+            Timber.e(ex, "Error seeding database")
             Result.failure()
         }
     }
