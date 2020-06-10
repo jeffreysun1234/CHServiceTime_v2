@@ -14,6 +14,10 @@ class TimeslotRepository(private val timeslotDao: TimeslotDao) : DataRepository 
     override suspend fun deleteTimeslotById(timeslotId: String) =
         timeslotDao.deleteTimeslotById(timeslotId)
 
+    override suspend fun deleteAllTimeslot() {
+        timeslotDao.deleteAllTimeslot()
+    }
+
     override suspend fun saveTimeslot(timeslot: TimeslotEntity) =
         timeslotDao.insertTimeslot(timeslot)
 

@@ -51,4 +51,20 @@ object TestData {
         false,
         false
     )
+
+    val timeslotEntity_all_week = TimeslotEntity(
+        "Timeslot Entity All Week",
+        "All Week",
+        13,
+        0,
+        17,
+        30,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+    )
 }

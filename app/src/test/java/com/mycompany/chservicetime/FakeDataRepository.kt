@@ -22,6 +22,10 @@ class FakeDataRepository : DataRepository {
     override suspend fun deleteTimeslotById(timeslotId: String) =
         timeslotDbData.remove(timeslotId)?.let { 1 } ?: 0
 
+    override suspend fun deleteAllTimeslot() {
+        timeslotDbData.clear()
+    }
+
     override suspend fun saveTimeslot(timeslot: TimeslotEntity) {
         if (timeslotDbData.containsKey(timeslot.id))
             timeslotDbData[timeslot.id] = timeslot

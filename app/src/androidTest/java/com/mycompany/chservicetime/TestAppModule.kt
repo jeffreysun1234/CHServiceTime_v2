@@ -11,6 +11,8 @@ val testLocalDataSourceModule = module(override = true) {
             .allowMainThreadQueries()
             .build()
     }
+
+    // single { InstrumentationRegistry.getInstrumentation().targetContext }
 }
 
 val testAppModules = listOf(testLocalDataSourceModule)

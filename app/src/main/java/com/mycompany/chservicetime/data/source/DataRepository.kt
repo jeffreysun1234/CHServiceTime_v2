@@ -13,6 +13,8 @@ interface DataRepository {
 
     suspend fun deleteTimeslotById(timeslotId: String): Int
 
+    suspend fun deleteAllTimeslot()
+
     suspend fun saveTimeslot(timeslot: TimeslotEntity)
 
     suspend fun activateTimeslot(timeslotId: String, activatedFlag: Boolean)
