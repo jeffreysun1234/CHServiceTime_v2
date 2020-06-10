@@ -29,11 +29,14 @@ android {
             }
         }
     }
-    sourceSets {
-        val sharedTestDir = "src/sharedTest/java"
-        getByName("test").java.srcDir(sharedTestDir)
-        getByName("androidTest").java.srcDir(sharedTestDir)
-    }
+    val sharedTestDir = "src/sharedTest/java"
+    sourceSets["test"].java.srcDir(sharedTestDir)
+    sourceSets["androidTest"].java.srcDir(sharedTestDir)
+    // sourceSets {
+    //     val sharedTestDir = "src/sharedTest/java"
+    //     getByName("test").java.srcDir(sharedTestDir)
+    //     getByName("androidTest").java.srcDir(sharedTestDir)
+    // }
     buildFeatures {
         viewBinding = true
         dataBinding = true
@@ -42,15 +45,19 @@ android {
         getByName("debug") {
             isMinifyEnabled = false
             isTestCoverageEnabled = true
-            isUseProguard = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             testProguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
         getByName("release") {
             isMinifyEnabled = true
-            isUseProguard = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-            testProguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            testProguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -82,39 +89,16 @@ android {
     dataBinding {
         isEnabledForTests = true
     }
+    // TODO: which packages make thees duplicate files
+    packagingOptions {
+        pickFirsts = setOf("META-INF/AL2.0", "META-INF/LGPL2.1")
+    }
 }
 
 dependencies {
-    debugImplementation("com.facebook.stetho:stetho:1.5.1")
-    debugImplementation("com.facebook.stetho:stetho-okhttp3:1.5.1")
-    kapt("androidx.room:room-compiler:${Versions.room_version}")
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("androidx.annotation:annotation:${Versions.annotation_version}")
-    implementation("androidx.appcompat:appcompat:1.1.0")
-    implementation("androidx.core:core-ktx:1.3.0")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle_version}")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}")
-    implementation("androidx.navigation:navigation-fragment-ktx:${Versions.navigation_version}")
-    implementation("androidx.navigation:navigation-ui-ktx:${Versions.navigation_version}")
-    implementation("androidx.preference:preference:1.1.1")
-    implementation("androidx.recyclerview:recyclerview:${Versions.recyclerview_version}")
-    implementation("androidx.room:room-runtime:${Versions.room_version}")
-    // Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:${Versions.room_version}")
-// implementation("androidx.work:work-gcm:${BuildDependenciesVersions.WORK_VERSION}")
-    implementation("androidx.work:work-runtime-ktx:${Versions.work_version}")
-    implementation("com.google.android.material:material:${Versions.material_version}")
-    implementation("com.jakewharton.timber:timber:${Versions.timber_version}")
-    implementation("org.koin:koin-android:${Versions.koin_version}")
-    implementation("org.koin:koin-androidx-scope:${Versions.koin_version}")
-    implementation("org.koin:koin-androidx-viewmodel:${Versions.koin_version}")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin_version}")
-    androidTestImplementation("androidx.arch.core:core-testing:${Versions.arch_core_testing_version}")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
-    androidTestImplementation("androidx.test.ext:junit:1.1.1")
-// androidTestImplementation("androidx.work:work-testing:${BuildDependenciesVersions.WORK_VERSION}")
-
+    addDependencies()
+    addDebugDependencies()
     addTestsDependencies()
-
+    addAndroidTestsDependencies()
 }

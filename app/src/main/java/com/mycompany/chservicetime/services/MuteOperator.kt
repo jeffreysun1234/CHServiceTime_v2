@@ -2,7 +2,7 @@ package com.mycompany.chservicetime.services
 
 import android.content.Context
 import com.mycompany.chservicetime.R
-import com.mycompany.chservicetime.data.source.TimeslotRepository
+import com.mycompany.chservicetime.data.source.DataRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
 import com.mycompany.chservicetime.usecases.TimeslotRules
 import com.mycompany.chservicetime.utilities.getCurrentHHmm
@@ -20,7 +20,7 @@ import java.util.Calendar
 
 class MuteOperator(val context: Context) : KoinComponent {
 
-    private val timeslotRepository: TimeslotRepository by inject()
+    private val timeslotRepository: DataRepository by inject()
 
     fun execute() {
         runBlocking<Unit> {

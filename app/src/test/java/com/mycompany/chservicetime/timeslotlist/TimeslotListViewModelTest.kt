@@ -9,11 +9,11 @@ import com.mycompany.chservicetime.MainCoroutineRule
 import com.mycompany.chservicetime.data.source.TestData
 import com.mycompany.chservicetime.services.DNDController
 import com.mycompany.chservicetime.services.MuteOperator
-import io.mockk.MockKAnnotations
 import io.mockk.Runs
+import io.mockk.clearMocks
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.just
+import io.mockk.mockk
 import io.mockk.mockkConstructor
 import io.mockk.mockkObject
 import io.mockk.verify
@@ -28,8 +28,7 @@ class TimeslotListViewModelTest {
     // Subject under test
     private lateinit var viewModel: TimeslotListViewModel
 
-    @MockK
-    private lateinit var app: Application
+    private val app: Application = mockk(relaxed = true)
 
     // Use a fake repository to be injected into the viewmodel
     private lateinit var dataDepository: FakeDataRepository
@@ -43,13 +42,14 @@ class TimeslotListViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    @Before
-    fun setUp() {
-        MockKAnnotations.init(this, relaxed = true)
-
+    init {
         dataDepository = FakeDataRepository()
         dataDepository.addTimeslots(TestData.timeslotEntity_1, TestData.timeslotEntity_2)
+    }
 
+    @Before
+    fun setUp() {
+        clearMocks(app)
         viewModel = TimeslotListViewModel(app, dataDepository)
     }
 
@@ -64,14 +64,6 @@ class TimeslotListViewModelTest {
     }
 
     @Test
-    fun getNextAlarmTime() {
-    }
-
-    @Test
-    fun getCurrentViewEvent() {
-    }
-
-    @Test
     fun doActivateTimeslot() {
         viewModel.doActivateTimeslot(TestData.timeslotEntity_1)
 
@@ -80,7 +72,7 @@ class TimeslotListViewModelTest {
     }
 
     @Test
-    fun triggerMuteService_premission_granted() {
+    fun triggerMuteService_permission_granted() {
         mockkObject(DNDController)
         mockkConstructor(MuteOperator::class)
 
