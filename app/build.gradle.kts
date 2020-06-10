@@ -91,7 +91,14 @@ android {
     }
     // TODO: which packages make thees duplicate files
     packagingOptions {
-        pickFirsts = setOf("META-INF/AL2.0", "META-INF/LGPL2.1")
+        pickFirsts =
+            setOf(
+                "META-INF/AL2.0",
+                "META-INF/LGPL2.1",
+                "win32-x86-64/attach_hotspot_windows.dll",
+                "win32-x86/attach_hotspot_windows.dll",
+                "META-INF/licenses/ASM"
+            )
     }
 }
 

@@ -34,7 +34,7 @@ class TimeslotListViewModel internal constructor(
         }
 
     fun triggerMuteService() {
-        if (DNDController.checkDndPermission(false)) {
+        if (DNDController(app).checkDndPermission(false)) {
             Timber.d("UI triggers an operation")
             MuteOperator(app.applicationContext).execute()
             // MuteService.startActionSetSoundMode(app.applicationContext)

@@ -1,6 +1,6 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 
-fun DependencyHandler.addDependencies(){
+fun DependencyHandler.addDependencies() {
     kapt("androidx.room:room-compiler:${Versions.room_version}")
     implementation("androidx.annotation:annotation:${Versions.annotation_version}")
     implementation("androidx.appcompat:appcompat:1.1.0")
@@ -77,8 +77,10 @@ fun DependencyHandler.addAndroidTestsDependencies() {
     // classpath.
     androidTestImplementation("androidx.test.espresso:espresso-idling-resource:3.1.0")
     androidTestImplementation("androidx.work:work-testing:${Versions.work_version}")
+    androidTestImplementation("io.mockk:mockk:${Versions.mockk_version}")
     androidTestImplementation("junit:junit:${Versions.junit_version}")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinx_coroutines_test_version}")
+    androidTestImplementation("org.koin:koin-test:${Versions.koin_version}")
 
     // androidTestImplementation(TestAndroidDependencies.PLAY_CORE)
     // androidTestImplementation(TestAndroidDependencies.LEAKCANARY)
