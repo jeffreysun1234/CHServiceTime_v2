@@ -3,15 +3,10 @@ package com.mycompany.chservicetime.services
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
-import com.mycompany.chservicetime.data.source.DataRepository
-import org.koin.android.ext.android.inject
-import org.koin.core.KoinComponent
 
 private const val ACTION_SET_SOUND_MODEL = "com.mycompany.chservicetime.services.action.ALARM"
 
-class MuteService : JobIntentService(), KoinComponent {
-
-    private val timeslotRepository: DataRepository by inject()
+class MuteService : JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
         when (intent?.action) {

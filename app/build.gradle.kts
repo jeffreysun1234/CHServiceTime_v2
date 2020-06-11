@@ -69,6 +69,8 @@ android {
         jvmTarget = "1.8"
     }
     testOptions {
+        execution = "ANDROID_TEST_ORCHESTRATOR"
+        animationsDisabled = true
         unitTests.apply {
             isIncludeAndroidResources = true
             all(KotlinClosure1<Any, Test>({
@@ -109,3 +111,5 @@ dependencies {
     addTestsDependencies()
     addAndroidTestsDependencies()
 }
+
+

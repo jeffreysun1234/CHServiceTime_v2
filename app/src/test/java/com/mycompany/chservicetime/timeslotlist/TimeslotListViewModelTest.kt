@@ -15,7 +15,6 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkConstructor
-import io.mockk.mockkObject
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
@@ -29,6 +28,7 @@ class TimeslotListViewModelTest {
     private lateinit var viewModel: TimeslotListViewModel
 
     private val app: Application = mockk(relaxed = true)
+    // private val app = mockkClass(Application::class, relaxed = true)
 
     // Use a fake repository to be injected into the viewmodel
     private lateinit var dataDepository: FakeDataRepository
@@ -73,11 +73,11 @@ class TimeslotListViewModelTest {
 
     @Test
     fun triggerMuteService_permission_granted() {
-        mockkObject(DNDController)
+        mockkConstructor(DNDController::class)
         mockkConstructor(MuteOperator::class)
 
         // permission granted
-        every { DNDController.checkDndPermission(any()) } returns true
+        every { anyConstructed<DNDController>().checkDndPermission(any()) } returns true
         every { anyConstructed<MuteOperator>().execute() } just Runs
 
         viewModel.triggerMuteService()
@@ -88,10 +88,10 @@ class TimeslotListViewModelTest {
 
     @Test
     fun triggerMuteService_permission_refused() {
-        mockkObject(DNDController)
+        mockkConstructor(DNDController::class)
 
         // permission refused
-        every { DNDController.checkDndPermission(any()) } returns false
+        every { anyConstructed<DNDController>().checkDndPermission(any()) } returns false
 
         viewModel.triggerMuteService()
 

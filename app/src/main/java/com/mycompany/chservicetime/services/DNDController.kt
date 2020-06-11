@@ -9,25 +9,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat.startActivity
 import com.mycompany.chservicetime.R
 
-object DNDController {
+class DNDController(val context: Context) {
 
-    private lateinit var context: Context
-    private lateinit var notificationManager: NotificationManager
-
-    operator fun invoke(context: Context): DNDController {
-        this.context = context
-        this.notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        // NotificationManagerCompat.from(app.applicationContext)
-
-        return this
-    }
+    private fun getNotificationManager() =
+        context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    // NotificationManagerCompat.from(app.applicationContext)
 
     //Checks if app has access to Do not disturb
     //If no access then prompts user to give permission
     //Call every time before you access Do not disturb
     fun checkDndPermission(showSettingDialog: Boolean): Boolean {
-        if (!notificationManager!!.isNotificationPolicyAccessGranted) {
+        if (!getNotificationManager().isNotificationPolicyAccessGranted) {
             //Ask for permission
             if (showSettingDialog) dndPermissionDialog()
             return false
@@ -56,8 +48,8 @@ object DNDController {
 
     //Will turn ON Do Not Disturb
     fun turnOnDND(): Boolean {
-        if (notificationManager.isNotificationPolicyAccessGranted()) {
-            notificationManager!!.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE)
+        if (getNotificationManager().isNotificationPolicyAccessGranted()) {
+            getNotificationManager().setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_NONE)
             return true
         } else {
             return false
@@ -66,8 +58,8 @@ object DNDController {
 
     //Will turn OFF Do Not Disturb
     fun turnOffDND(): Boolean {
-        if (notificationManager.isNotificationPolicyAccessGranted()) {
-            notificationManager!!.setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
+        if (getNotificationManager().isNotificationPolicyAccessGranted()) {
+            getNotificationManager().setInterruptionFilter(NotificationManager.INTERRUPTION_FILTER_ALL)
             return true
         } else {
             return false
