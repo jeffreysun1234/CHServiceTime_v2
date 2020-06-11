@@ -57,12 +57,12 @@ fun DependencyHandler.addAndroidTestsDependencies() {
     androidTestImplementation("androidx.arch.core:core-testing:${Versions.arch_core_testing_version}")
     androidTestImplementation("androidx.navigation:navigation-testing:${Versions.navigation_version}")
     // Core library
-    androidTestImplementation("androidx.test:core:${Versions.testCore_version}")
+    androidTestImplementation("androidx.test:core-ktx:${Versions.testCore_version}")
     // AndroidJUnitRunner and JUnit Rules
     androidTestImplementation("androidx.test:runner:${Versions.runner_version}")
     androidTestImplementation("androidx.test:rules:${Versions.rules_version}")
     // Assertions
-    androidTestImplementation("androidx.test.ext:junit:${Versions.testExtJUnit_version}")
+    androidTestImplementation("androidx.test.ext:junit-ktx:${Versions.testExtJUnit_version}")
     androidTestImplementation("androidx.test.ext:truth:${Versions.testExtTruth_version}")
     androidTestImplementation("com.google.truth:truth:${Versions.truth_version}")
     // Espresso dependencies

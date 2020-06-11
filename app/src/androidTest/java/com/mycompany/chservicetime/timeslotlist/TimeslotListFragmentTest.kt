@@ -1,25 +1,35 @@
 package com.mycompany.chservicetime.timeslotlist
 
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.navigation.Navigation
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mycompany.chservicetime.MainActivity
 import com.mycompany.chservicetime.MainCoroutineRule
 import com.mycompany.chservicetime.R
 import com.mycompany.chservicetime.data.source.DataRepository
 import com.mycompany.chservicetime.data.source.TestData
 import com.mycompany.chservicetime.getEndTimeForTest
 import com.mycompany.chservicetime.testAppModules
+import com.mycompany.chservicetime.timeslotdetail.TimeslotDetailFragment
 import com.mycompany.chservicetime.utilities.getFormatHourMinuteString
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.Matcher
+import org.hamcrest.core.IsInstanceOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -130,6 +140,47 @@ class TimeslotListFragmentTest : KoinTest {
                 )
             )
         ).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun clickAddTimeslotButton_atEmptyList_navigateToDetailFragment() {
+        // Create a TestNavHostController
+        val testNavController = TestNavHostController(ApplicationProvider.getApplicationContext())
+        testNavController.setGraph(R.navigation.nav_graph)
+
+        // On the home screen
+        val scenario = launchFragmentInContainer<TimeslotListFragment>(Bundle(), R.style.AppTheme)
+
+        // Set the NavController property on the fragment
+        scenario.onFragment { fragment ->
+            Navigation.setViewNavController(fragment.requireView(), testNavController)
+        }
+
+        // WHEN - Click on the add button
+        onView(withId(R.id.add_timeslot)).perform(click())
+
+        // THEN - Verify that we navigate to the add screen
+        assertThat(testNavController.currentDestination?.id, equalTo(R.id.timeslotDetailFragment))
+    }
+
+    @Test
+    fun clickAddTimeslotMenuItem_navigateToDetailFragment() {
+        val activityScenario = launchActivity<MainActivity>()
+
+        // WHEN - Click on the add button
+        onView(withId(R.id.action_add_timeslot)).perform(click())
+
+        activityScenario.onActivity { activity ->
+            val currentFragment =
+                activity.nav_host?.childFragmentManager?.primaryNavigationFragment
+
+            // THEN - Verify that we navigate to the add screen
+            assertThat(currentFragment, IsInstanceOf(TimeslotDetailFragment::class.java))
+        }
+
+        // ActivityScenario does’t clean up device state automatically
+        // and may leave the activity keep running after the test finishes.
+        activityScenario.close()
     }
 
     private fun checkboxWithText(text: String): Matcher<View> {
