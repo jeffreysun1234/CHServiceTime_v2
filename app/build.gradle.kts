@@ -12,7 +12,7 @@ plugins {
 
 android {
     compileSdkVersion(Versions.compileSdkVersion)
-    buildToolsVersion = "29.0.3"
+    buildToolsVersion = "30.0.0"
 
     defaultConfig {
         applicationId = "com.mycompany.chservicetime"
@@ -22,6 +22,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // // The following argument makes the Android Test Orchestrator run its
+        // // "pm clear" command after each test invocation. This command ensures
+        // // that the app's state is completely cleared between tests.
+        // testInstrumentationRunnerArguments = mapOf(
+        //     "clearPackageData" to "true"
+        // )
 
         kapt {
             arguments {
@@ -69,7 +76,7 @@ android {
         jvmTarget = "1.8"
     }
     testOptions {
-        execution = "ANDROID_TEST_ORCHESTRATOR"
+        // execution = "ANDROID_TEST_ORCHESTRATOR"
         animationsDisabled = true
         unitTests.apply {
             isIncludeAndroidResources = true
@@ -110,6 +117,10 @@ dependencies {
     addDebugDependencies()
     addTestsDependencies()
     addAndroidTestsDependencies()
+
+    // androidTestImplementation("androidx.test:runner:1.2.0")
+    // androidTestUtil("androidx.test:orchestrator:1.2.0")
+
 }
 
 

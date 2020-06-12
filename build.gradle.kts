@@ -15,7 +15,6 @@ buildscript {
 
 plugins {
     id("com.lazan.dependency-export") version "0.5"
-    id("com.vanniktech.android.junit.jacoco") version "0.16.0"
 }
 
 allprojects {
@@ -28,13 +27,6 @@ allprojects {
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
-}
-
-configure<com.vanniktech.android.junit.jacoco.JunitJacocoExtension> {
-    jacocoVersion = "0.8.5"
-    excludes // type String List
-    includeNoLocationClasses = false // type boolean
-    includeInstrumentationCoverageInMergedReport = false // type boolean
 }
 
 
