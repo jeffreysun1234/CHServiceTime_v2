@@ -1,12 +1,12 @@
 package com.mycompany.chservicetime.utilities
 
-import junit.framework.Assert.assertEquals
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 class DateTimeUtilsKtTest {
 
     @Test
     fun getFormatHourMinuteString() {
-        assertEquals("09:23", getFormatHourMinuteString(923))
+        assertThat(getFormatHourMinuteString(923)).isEqualTo("09:23")
     }
 }

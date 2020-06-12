@@ -24,11 +24,12 @@ fun DependencyHandler.addDependencies() {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin_version}")
 }
 
+// TODO: remove these libs from the release package
 fun DependencyHandler.addDebugDependencies() {
     // Once https://issuetracker.google.com/127986458 is fixed this can be testImplementation
-    debugImplementation("androidx.fragment:fragment-testing:${Versions.fragment_version}")
-    debugImplementation("com.facebook.stetho:stetho:1.5.1")
-    debugImplementation("com.facebook.stetho:stetho-okhttp3:1.5.1")
+    implementation("androidx.fragment:fragment-testing:${Versions.fragment_version}")
+    implementation("com.facebook.stetho:stetho:1.5.1")
+    implementation("com.facebook.stetho:stetho-okhttp3:1.5.1")
 }
 
 /**
