@@ -8,7 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.mycompany.chservicetime.databinding.ActivityMainBinding
-import com.mycompany.chservicetime.services.DNDController
+import com.mycompany.chservicetime.utilities.DNDControllerHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +22,6 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
-        DNDController(this).checkDndPermission(true)
+        DNDControllerHelper.checkDndPermissionCompat(this, true)
     }
 }

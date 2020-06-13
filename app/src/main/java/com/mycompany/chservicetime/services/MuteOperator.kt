@@ -1,6 +1,8 @@
 package com.mycompany.chservicetime.services
 
 import android.content.Context
+import android.media.AudioManager
+import android.os.Build
 import com.mycompany.chservicetime.R
 import com.mycompany.chservicetime.data.source.DataRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
@@ -46,14 +48,30 @@ class MuteOperator(val context: Context) : KoinComponent {
     }
 
     private fun setMuteMode(nextAlarmTimePoint: Pair<Boolean, Int>) {
-        Timber.d("Get next alarm : $nextAlarmTimePoint")
+        Timber.d(
+            "Get next alarm : ${nextAlarmTimePoint.first} at ${getFormatHourMinuteString(
+                nextAlarmTimePoint.second
+            )}"
+        )
 
         if (nextAlarmTimePoint.first) {
             Timber.d("Set Mute mode at ${timestampFormat(Calendar.getInstance().timeInMillis)}")
-            DNDController(context.applicationContext).turnOnDND()
+            if (Build.VERSION.SDK_INT >= 23) {
+                DNDController(context.applicationContext).turnOnDND()
+            } else if (Build.VERSION.SDK_INT >= 19) {
+                val audiomanage =
+                    context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                audiomanage.ringerMode = AudioManager.RINGER_MODE_SILENT
+            }
         } else {
             Timber.d("Set Normal mode at ${timestampFormat(Calendar.getInstance().timeInMillis)}")
-            DNDController(context.applicationContext).turnOffDND()
+            if (Build.VERSION.SDK_INT >= 23) {
+                DNDController(context.applicationContext).turnOffDND()
+            } else if (Build.VERSION.SDK_INT >= 19) {
+                val audiomanage =
+                    context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                audiomanage.ringerMode = AudioManager.RINGER_MODE_NORMAL
+            }
         }
 
         putPreferenceIntValue(

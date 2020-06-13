@@ -23,6 +23,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        vectorDrawables.useSupportLibrary = true
+
         // // The following argument makes the Android Test Orchestrator run its
         // // "pm clear" command after each test invocation. This command ensures
         // // that the app's state is completely cleared between tests.

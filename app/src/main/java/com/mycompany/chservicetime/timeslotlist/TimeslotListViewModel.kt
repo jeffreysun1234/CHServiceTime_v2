@@ -8,9 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.mycompany.chservicetime.R
 import com.mycompany.chservicetime.data.source.DataRepository
 import com.mycompany.chservicetime.data.source.local.TimeslotEntity
-import com.mycompany.chservicetime.services.DNDController
 import com.mycompany.chservicetime.services.MuteOperator
 import com.mycompany.chservicetime.utilities.CHEvent
+import com.mycompany.chservicetime.utilities.DNDControllerHelper
 import com.mycompany.chservicetime.utilities.putPreferenceIntValue
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -34,7 +34,7 @@ class TimeslotListViewModel internal constructor(
         }
 
     fun triggerMuteService() {
-        if (DNDController(app).checkDndPermission(false)) {
+        if (DNDControllerHelper.checkDndPermissionCompat(app, false)) {
             Timber.d("UI triggers an operation")
             MuteOperator(app.applicationContext).execute()
             // MuteService.startActionSetSoundMode(app.applicationContext)

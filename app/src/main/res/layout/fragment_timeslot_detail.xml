@@ -12,254 +12,261 @@
             type="com.mycompany.chservicetime.timeslotdetail.TimeslotDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".timeslotdetail.TimeslotDetailFragment">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{()->viewmodel.deleteTimeslot()}"
-            android:text="@string/delete_button"
-            android:visibility="@{viewmodel.newTimeslot ? View.GONE : View.VISIBLE}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/save_button"
-            app:layout_constraintTop_toTopOf="@+id/save_button" />
+            tools:context=".timeslotdetail.TimeslotDetailFragment">
 
-        <Button
-            android:id="@+id/save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->viewmodel.saveTimeslot()}"
-            android:text="@string/save_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/delete_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/repeat_checkBox" />
+            <Button
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewmodel.deleteTimeslot()}"
+                android:text="@string/delete_button"
+                android:visibility="@{viewmodel.newTimeslot ? View.GONE : View.VISIBLE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/save_button"
+                app:layout_constraintTop_toTopOf="@+id/save_button" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Name:"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/timeslot_title" />
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:onClick="@{()->viewmodel.saveTimeslot()}"
+                android:text="@string/save_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/delete_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/repeat_checkBox" />
 
-        <EditText
-            android:id="@+id/timeslot_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:ems="20"
-            android:hint="Pleae input a name."
-            android:inputType="textPersonName"
-            android:text="@={viewmodel.title}"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Name:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/timeslot_title" />
 
-        <ToggleButton
-            android:id="@+id/day_fri_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="@={viewmodel.day5Selected}"
-            android:fontFamily="monospace"
-            android:minWidth="0dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="ToggleButton"
-            android:textAllCaps="false"
-            android:textOff="Fr"
-            android:textOn="Fr"
-            app:layout_constraintBottom_toBottomOf="@+id/day_sat_button"
-            app:layout_constraintEnd_toStartOf="@+id/day_sat_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day_thu_button" />
+            <EditText
+                android:id="@+id/timeslot_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                android:ems="20"
+                android:hint="Pleae input a name."
+                android:inputType="textPersonName"
+                android:text="@={viewmodel.title}"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView5"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <ToggleButton
-            android:id="@+id/day_sun_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:checked="@={viewmodel.day0Selected}"
-            android:fontFamily="monospace"
-            android:minWidth="0dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="ToggleButton"
-            android:textAllCaps="false"
-            android:textOff="Su"
-            android:textOn="Su"
-            app:layout_constraintBottom_toBottomOf="@+id/day_mon_button"
-            app:layout_constraintEnd_toStartOf="@+id/day_mon_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            <ToggleButton
+                android:id="@+id/day_fri_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewmodel.day5Selected}"
+                android:fontFamily="monospace"
+                android:minWidth="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textOff="Fr"
+                android:textOn="Fr"
+                app:layout_constraintBottom_toBottomOf="@+id/day_sat_button"
+                app:layout_constraintEnd_toStartOf="@+id/day_sat_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/day_thu_button" />
 
-        <ToggleButton
-            android:id="@+id/day_mon_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="@={viewmodel.day1Selected}"
-            android:fontFamily="monospace"
-            android:minWidth="0dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="ToggleButton"
-            android:textAllCaps="false"
-            android:textOff="Mo"
-            android:textOn="Mo"
-            app:layout_constraintBottom_toBottomOf="@+id/day_tue_button"
-            app:layout_constraintEnd_toStartOf="@+id/day_tue_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day_sun_button" />
+            <ToggleButton
+                android:id="@+id/day_sun_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:checked="@={viewmodel.day0Selected}"
+                android:fontFamily="monospace"
+                android:minWidth="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textOff="Su"
+                android:textOn="Su"
+                app:layout_constraintBottom_toBottomOf="@+id/day_mon_button"
+                app:layout_constraintEnd_toStartOf="@+id/day_mon_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <ToggleButton
-            android:id="@+id/day_tue_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="@={viewmodel.day2Selected}"
-            android:fontFamily="monospace"
-            android:minWidth="0dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="ToggleButton"
-            android:textAllCaps="false"
-            android:textOff="Tu"
-            android:textOn="Tu"
-            app:layout_constraintBottom_toBottomOf="@+id/day_wed_button"
-            app:layout_constraintEnd_toStartOf="@+id/day_wed_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day_mon_button" />
+            <ToggleButton
+                android:id="@+id/day_mon_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewmodel.day1Selected}"
+                android:fontFamily="monospace"
+                android:minWidth="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textOff="Mo"
+                android:textOn="Mo"
+                app:layout_constraintBottom_toBottomOf="@+id/day_tue_button"
+                app:layout_constraintEnd_toStartOf="@+id/day_tue_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/day_sun_button" />
 
-        <ToggleButton
-            android:id="@+id/day_wed_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="@={viewmodel.day3Selected}"
-            android:fontFamily="monospace"
-            android:minWidth="0dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="ToggleButton"
-            android:textAllCaps="false"
-            android:textOff="We"
-            android:textOn="We"
-            app:layout_constraintBottom_toBottomOf="@+id/day_thu_button"
-            app:layout_constraintEnd_toStartOf="@+id/day_thu_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day_tue_button" />
+            <ToggleButton
+                android:id="@+id/day_tue_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewmodel.day2Selected}"
+                android:fontFamily="monospace"
+                android:minWidth="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textOff="Tu"
+                android:textOn="Tu"
+                app:layout_constraintBottom_toBottomOf="@+id/day_wed_button"
+                app:layout_constraintEnd_toStartOf="@+id/day_wed_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/day_mon_button" />
 
-        <ToggleButton
-            android:id="@+id/day_thu_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="@={viewmodel.day4Selected}"
-            android:fontFamily="monospace"
-            android:minWidth="0dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="ToggleButton"
-            android:textAllCaps="false"
-            android:textOff="Th"
-            android:textOn="Th"
-            app:layout_constraintBottom_toBottomOf="@+id/day_fri_button"
-            app:layout_constraintEnd_toStartOf="@+id/day_fri_button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day_wed_button" />
+            <ToggleButton
+                android:id="@+id/day_wed_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewmodel.day3Selected}"
+                android:fontFamily="monospace"
+                android:minWidth="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textOff="We"
+                android:textOn="We"
+                app:layout_constraintBottom_toBottomOf="@+id/day_thu_button"
+                app:layout_constraintEnd_toStartOf="@+id/day_thu_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/day_tue_button" />
 
-        <ToggleButton
-            android:id="@+id/day_sat_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:checked="@={viewmodel.day6Selected}"
-            android:fontFamily="monospace"
-            android:minWidth="0dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="ToggleButton"
-            android:textAllCaps="false"
-            android:textOff="Sa"
-            android:textOn="Sa"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/day_fri_button"
-            app:layout_constraintTop_toBottomOf="@+id/timeslot_end_time" />
+            <ToggleButton
+                android:id="@+id/day_thu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={viewmodel.day4Selected}"
+                android:fontFamily="monospace"
+                android:minWidth="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textOff="Th"
+                android:textOn="Th"
+                app:layout_constraintBottom_toBottomOf="@+id/day_fri_button"
+                app:layout_constraintEnd_toStartOf="@+id/day_fri_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/day_wed_button" />
 
-        <CheckBox
-            android:id="@+id/repeat_checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:checked="@={viewmodel.repeated}"
-            android:text="Repeat Weekly"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/day_sat_button"
-            app:layout_constraintTop_toBottomOf="@+id/day_sat_button" />
+            <ToggleButton
+                android:id="@+id/day_sat_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:checked="@={viewmodel.day6Selected}"
+                android:fontFamily="monospace"
+                android:minWidth="0dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="ToggleButton"
+                android:textAllCaps="false"
+                android:textOff="Sa"
+                android:textOn="Sa"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/day_fri_button"
+                app:layout_constraintTop_toBottomOf="@+id/timeslot_end_time" />
 
-        <TimePicker
-            android:id="@+id/timeslot_begin_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hour="@={viewmodel.beginTimeHour}"
-            android:minute="@={viewmodel.beginTimeMunite}"
-            android:timePickerMode="spinner"
-            app:layout_constraintEnd_toStartOf="@+id/timeslot_end_time"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            <CheckBox
+                android:id="@+id/repeat_checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:checked="@={viewmodel.repeated}"
+                android:text="Repeat Weekly"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@+id/day_sat_button"
+                app:layout_constraintTop_toBottomOf="@+id/day_sat_button" />
 
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Begin Time"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/textView8"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            <TimePicker
+                android:id="@+id/timeslot_begin_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hour="@={viewmodel.beginTimeHour}"
+                android:minute="@={viewmodel.beginTimeMunite}"
+                android:timePickerMode="spinner"
+                app:layout_constraintEnd_toStartOf="@+id/timeslot_end_time"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="End Time"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toTopOf="@+id/textView7" />
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Begin Time"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/textView8"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-        <TimePicker
-            android:id="@+id/timeslot_end_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hour="@={viewmodel.endTimeHour}"
-            android:minute="@={viewmodel.endTimeMunite}"
-            android:timePickerMode="spinner"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/timeslot_begin_time"
-            app:layout_constraintTop_toTopOf="@+id/timeslot_begin_time" />
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Time"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/textView7"
+                app:layout_constraintTop_toTopOf="@+id/textView7" />
+
+            <TimePicker
+                android:id="@+id/timeslot_end_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hour="@={viewmodel.endTimeHour}"
+                android:minute="@={viewmodel.endTimeMunite}"
+                android:timePickerMode="spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/timeslot_begin_time"
+                app:layout_constraintTop_toTopOf="@+id/timeslot_begin_time" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </layout>
