@@ -10,7 +10,7 @@
 
         <variable
             name="viewmodel"
-            type="com.mycompany.chservicetime.timeslotlist.TimeslotListViewModel" />
+            type="com.mycompany.servicetime.timeslotlist.TimeslotListViewModel" />
 
     </data>
 

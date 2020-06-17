@@ -9,7 +9,7 @@
 
         <variable
             name="viewmodel"
-            type="com.mycompany.chservicetime.timeslotdetail.TimeslotDetailViewModel" />
+            type="com.mycompany.servicetime.timeslotdetail.TimeslotDetailViewModel" />
     </data>
 
     <ScrollView

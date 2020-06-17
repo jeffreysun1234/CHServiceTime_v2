@@ -25,7 +25,7 @@ android {
     buildToolsVersion = "30.0.0"
 
     defaultConfig {
-        applicationId = "com.mycompany.chservicetime"
+        applicationId = "com.mycompany.servicetime"
         minSdkVersion(Versions.minSdkVersion)
         targetSdkVersion(Versions.targetSdkVersion)
         versionCode = 10
@@ -48,14 +48,14 @@ android {
             }
         }
     }
-    val sharedTestDir = "src/sharedTest/java"
-    sourceSets["test"].java.srcDir(sharedTestDir)
-    sourceSets["androidTest"].java.srcDir(sharedTestDir)
-    // sourceSets {
-    //     val sharedTestDir = "src/sharedTest/java"
-    //     getByName("test").java.srcDir(sharedTestDir)
-    //     getByName("androidTest").java.srcDir(sharedTestDir)
-    // }
+    // val sharedTestDir = "src/sharedTest/java"
+    // sourceSets["test"].java.srcDir(sharedTestDir)
+    // sourceSets["androidTest"].java.srcDir(sharedTestDir)
+    sourceSets {
+        val sharedTestDir = "src/sharedTest/java"
+        getByName("test").java.srcDir(sharedTestDir)
+        getByName("androidTest").java.srcDir(sharedTestDir)
+    }
     buildFeatures {
         viewBinding = true
         dataBinding = true
@@ -130,10 +130,6 @@ dependencies {
     addDebugDependencies()
     addTestsDependencies()
     addAndroidTestsDependencies()
-
-    // androidTestImplementation("androidx.test:runner:1.2.0")
-    // androidTestUtil("androidx.test:orchestrator:1.2.0")
-
 }
 
 

@@ -7,7 +7,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.mycompany.chservicetime.utilities.TimeslotEntityExtKt" />
+        <import type="com.mycompany.servicetime.utilities.TimeslotEntityExtKt" />
 
         <variable
             name="itemClickListener"
@@ -19,7 +19,7 @@
 
         <variable
             name="timeslot"
-            type="com.mycompany.chservicetime.data.source.local.TimeslotEntity" />
+            type="com.mycompany.servicetime.data.source.local.TimeslotEntity" />
 
     </data>
 
