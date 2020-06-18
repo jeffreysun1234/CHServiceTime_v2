@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mycompany.servicetime.R
 import com.mycompany.servicetime.data.source.DataRepository
 import com.mycompany.servicetime.data.source.local.TimeslotEntity
 import com.mycompany.servicetime.utilities.CHEvent
@@ -33,6 +34,8 @@ class TimeslotDetailViewModel internal constructor(
     val endTimeHour = MutableLiveData<Int>()
     val endTimeMunite = MutableLiveData<Int>()
     val repeated = MutableLiveData<Boolean>()
+
+    val titleError = MutableLiveData<String>()
 
     private var currentData: LiveData<TimeslotEntity>? = null
 
@@ -68,6 +71,13 @@ class TimeslotDetailViewModel internal constructor(
             beginTimeMunite.value = currentMinute
             endTimeHour.value = currentHour
             endTimeMunite.value = currentMinute
+            day0Selected.value = false
+            day1Selected.value = false
+            day2Selected.value = false
+            day3Selected.value = false
+            day4Selected.value = false
+            day5Selected.value = false
+            day6Selected.value = false
             return
         }
 
@@ -79,7 +89,6 @@ class TimeslotDetailViewModel internal constructor(
 
     private fun onTimeslotLoaded(timeslot: TimeslotEntity?) {
         timeslot?.let {
-            // currentTimeslot = it
             title.value = timeslot.title
             beginTimeHour.value = timeslot.beginTimeHour
             beginTimeMunite.value = timeslot.beginTimeMinute
@@ -93,21 +102,42 @@ class TimeslotDetailViewModel internal constructor(
             day5Selected.value = timeslot.isFriSelected
             day6Selected.value = timeslot.isSatSelected
             repeated.value = timeslot.isRepeated
+
+            titleError.value = null
         }
     }
 
-    // Called when clicking on fab.
+    // Called when clicking on the Save button
     fun saveTimeslot() {
-        val currentTitle = title.value
-
-        //TODO: verify the data
-
-        if (isNewTimeslot) {
-            createTimeslot(setTimeslotValue(TimeslotEntity()))
-        } else {
-            val timeslot = currentData?.value?.copy() ?: return
-            updateTimeslot(setTimeslotValue(timeslot))
+        if (verifyInputData()) {
+            if (isNewTimeslot) {
+                createTimeslot(setTimeslotValue(TimeslotEntity()))
+            } else {
+                val timeslot = currentData?.value?.copy() ?: return
+                updateTimeslot(setTimeslotValue(timeslot))
+            }
         }
+    }
+
+    private fun verifyInputData(): Boolean {
+        var result = true
+        // Title can not be empty
+        if (title.value.isNullOrEmpty()) {
+            titleError.value = "Name can not be empty!"
+            result = false
+        } else {
+            titleError.value = null
+        }
+
+        // At least one day need to be chosen.
+        if (!(day0Selected.value!! || day1Selected.value!! || day2Selected.value!!
+                || day3Selected.value!! || day4Selected.value!! || day5Selected.value!!
+                || day6Selected.value!!)
+        ) {
+            result = false
+            _currentViewEvent.value = CHEvent(TimeslotDetailResult.Title(R.string.input_error_days))
+        }
+        return result
     }
 
     private fun setTimeslotValue(timeslot: TimeslotEntity): TimeslotEntity {

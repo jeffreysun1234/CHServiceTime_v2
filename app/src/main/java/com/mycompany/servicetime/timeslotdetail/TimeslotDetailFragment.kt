@@ -8,9 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.mycompany.servicetime.R
 import com.mycompany.servicetime.databinding.FragmentTimeslotDetailBinding
 import com.mycompany.servicetime.utilities.EventObserver
+import com.mycompany.servicetime.utilities.showSnackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -23,11 +25,13 @@ class TimeslotDetailFragment : Fragment() {
 
     private val viewModel: TimeslotDetailViewModel by viewModel { parametersOf(args.timeslotId) }
 
+    private lateinit var binding: FragmentTimeslotDetailBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val viewDataBinding = DataBindingUtil.inflate<FragmentTimeslotDetailBinding>(
+        binding = DataBindingUtil.inflate<FragmentTimeslotDetailBinding>(
             inflater, R.layout.fragment_timeslot_detail, container, false
         ).apply {
             timeslotBeginTime.setIs24HourView(true)
@@ -38,7 +42,7 @@ class TimeslotDetailFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        return viewDataBinding.root
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -74,6 +78,12 @@ class TimeslotDetailFragment : Fragment() {
                     val action = TimeslotDetailFragmentDirections
                         .actionTimeslotDetailFragmentToTimeslotListFragment()
                     findNavController().navigate(action)
+                }
+                is TimeslotDetailResult.Title -> {
+                    binding.root.showSnackbar(
+                        (it as TimeslotDetailResult.Title).resTitle,
+                        Snackbar.LENGTH_LONG
+                    )
                 }
             }
 

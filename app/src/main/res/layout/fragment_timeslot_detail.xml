@@ -69,6 +69,7 @@
                 android:hint="Pleae input a name."
                 android:inputType="textPersonName"
                 android:text="@={viewmodel.title}"
+                android:error="@{viewmodel.titleError}"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView5"
