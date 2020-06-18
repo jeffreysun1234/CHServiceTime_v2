@@ -54,10 +54,6 @@ class TimeslotDetailViewModel internal constructor(
         super.onCleared()
     }
 
-    // init {
-    //     start(timeslotId)
-    // }
-
     /**
      * Initial data for adding a new timeslot or load data from data source for editing a timeslot
      */

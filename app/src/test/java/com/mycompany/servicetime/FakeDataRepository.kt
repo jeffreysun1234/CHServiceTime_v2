@@ -30,7 +30,7 @@ class FakeDataRepository : DataRepository {
         if (timeslotDbData.containsKey(timeslot.id))
             timeslotDbData[timeslot.id] = timeslot
         else
-            timeslotDbData.plus(timeslot.id to timeslot)
+            timeslotDbData.put(timeslot.id, timeslot)
     }
 
     override suspend fun activateTimeslot(timeslotId: String, activatedFlag: Boolean) {
