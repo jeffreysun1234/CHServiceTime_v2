@@ -46,11 +46,6 @@ class TimeslotListFragmentTest : KoinTest {
 
     private val dataRepository: DataRepository by inject()
 
-    // @get:Rule
-    // val mockProvider = MockProviderRule.create { clazz ->
-    //     mockkClass(clazz.java.kotlin)
-    // }
-
     // Set the main coroutines dispatcher for unit testing.
     @ExperimentalCoroutinesApi
     @get:Rule
